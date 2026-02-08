@@ -1,0 +1,17 @@
+{
+  "request_example": {
+    "method": "GET",
+    "path": "/demo.json",
+    "accept": "application/json"
+  },
+  "app_headers_simulados": {
+    "content-type": "application/json; charset=utf-8",
+    "accept": "application/json",
+    "authorization": "Bearer <token-demo>",
+    "cache-control": "no-store",
+    "user-agent": "browser-demo"
+  },
+  "status_examples": [200, 401, 403, 404, 500],
+  "message": "Esto se inspecciona en DevTools -> Network. Revisa Method, Status, Headers, Response y Timing.",
+  "tema": "Modelo OSI con foco en Capa 7"
+}

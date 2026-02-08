@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color: #0b1220;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(245, 133, 41, 0.14), transparent 34%),
+    radial-gradient(circle at 90% 8%, rgba(221, 42, 123, 0.12), transparent 36%),
+    radial-gradient(circle at 85% 80%, rgba(81, 91, 212, 0.12), transparent 40%),
+    linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(129, 140, 248, 0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(129, 140, 248, 0.15) 1px, transparent 1px);
+  background-size: 34px 34px;
+  opacity: 0.32;
+}
+
+.hero-shell {
+  @apply rounded-3xl border border-slate-200/80 bg-white/80 shadow-[0_24px_64px_rgba(15,23,42,0.10)] backdrop-blur-xl;
+}
+
+.card {
+  @apply rounded-3xl border border-slate-200/85 bg-white/80 shadow-[0_14px_34px_rgba(15,23,42,0.08)] backdrop-blur;
+  transition: transform 280ms ease, box-shadow 280ms ease, border-color 280ms ease;
+}
+
+.card:hover {
+  transform: translateY(-5px) rotateX(1deg);
+  border-color: rgba(129, 140, 248, 0.55);
+  box-shadow: 0 24px 48px rgba(99, 102, 241, 0.18);
+}
+
+.nav-link { position: relative; transition: color 220ms ease; }
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: linear-gradient(90deg, #f58529, #dd2a7b, #515bd4);
+  transition: transform 220ms ease;
+}
+
+.nav-link:hover { color: #4f46e5; text-shadow: 0 0 12px rgba(99, 102, 241, 0.35); }
+.nav-link:hover::after { transform: scaleX(1); }
+
+.insta-highlight {
+  background: linear-gradient(120deg, #f58529, #dd2a7b, #8134af, #515bd4);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.chip-chip {
+  @apply rounded-full border border-slate-200 bg-white/85 px-3 py-1.5 text-xs text-slate-600 transition hover:border-indigo-300 hover:text-indigo-700;
+}
+
+.btn-primary {
+  @apply inline-flex items-center rounded-full bg-gradient-to-r from-[#F58529] via-[#DD2A7B] to-[#515BD4] px-6 py-3 text-sm font-medium text-white shadow-[0_14px_30px_rgba(129,52,175,0.32)] transition hover:brightness-105 active:scale-[0.99] focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/60;
+}
+
+.btn-secondary {
+  @apply rounded-full border border-slate-300 bg-white/90 px-6 py-3 text-sm font-medium text-slate-700 transition hover:border-indigo-300 hover:text-indigo-700 active:scale-[0.99];
+}
+
+.result-item { @apply rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm; }
+.result-item span { @apply block text-xs uppercase tracking-wide text-slate-500; }
+.result-item strong { @apply mt-1 block text-slate-900; }
+
+.code-block { @apply max-h-80 overflow-auto rounded-xl bg-slate-950 p-4 text-xs leading-relaxed text-cyan-200; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
