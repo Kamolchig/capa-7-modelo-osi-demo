@@ -58,6 +58,7 @@ export default function DemoSection() {
 
   return (
     <section id="demo" className="scroll-mt-28 py-24">
+      <div className="w-full max-w-full overflow-hidden px-2">
       <Reveal>
         <h2 className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-4xl font-semibold text-transparent sm:text-5xl">Demo interactiva</h2>
         <p className="mt-3 max-w-4xl text-slate-600">Actividad de aprendizaje: elige un escenario y observa qué cambia en Network.</p>
@@ -106,7 +107,7 @@ export default function DemoSection() {
         </article>
       </Reveal>
 
-      <div className="mt-8 grid gap-6 px-2 md:px-6 lg:grid-cols-[1fr_1.2fr]">
+      <div className="mt-8 grid grid-cols-1 gap-6 px-2 md:px-6 lg:grid-cols-2">
         <Reveal>
           <article className="card p-7">
             <label htmlFor="status-select" className="text-sm font-medium text-slate-700">Escenario de status</label>
@@ -134,16 +135,20 @@ export default function DemoSection() {
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="result-item"><span>Método</span><strong>{result.method}</strong></div>
                 <div className="result-item"><span>Status</span><strong>{result.status}</strong></div>
-                <div className="result-item sm:col-span-2 break-all"><span>URL</span><strong>{result.url}</strong></div>
+                <div className="result-item sm:col-span-2 break-all"><span>URL</span><strong className="break-all">{result.url}</strong></div>
                 <div className="result-item sm:col-span-2 break-all"><span>Content-Type</span><strong>{result.contentType}</strong></div>
-                <div className="sm:col-span-2 flex flex-col gap-4 lg:flex-row">
-                  <div>
+                <div className="sm:col-span-2 flex w-full flex-col lg:flex-row">
+                  <div className="w-full lg:w-1/2">
                     <div className="mb-2 flex items-center justify-between"><span className="text-xs uppercase text-slate-500">Request</span><button className="text-xs text-indigo-600" onClick={() => copyText(requestPreview)}><Copy className="mr-1 inline h-3.5 w-3.5" />Copiar</button></div>
-                    <pre className="code-block w-full overflow-x-auto whitespace-pre-wrap break-words">{requestPreview}</pre>
+                    <div className="w-full max-w-full overflow-x-auto rounded-lg bg-slate-900">
+                      <pre className="code-block custom-scrollbar w-full break-all whitespace-pre-wrap text-xs md:text-sm">{requestPreview}</pre>
+                    </div>
                   </div>
-                  <div>
+                  <div className="w-full lg:w-1/2">
                     <div className="mb-2 flex items-center justify-between"><span className="text-xs uppercase text-slate-500">Response</span><button className="text-xs text-indigo-600" onClick={() => copyText(responsePreview)}><Copy className="mr-1 inline h-3.5 w-3.5" />Copiar</button></div>
-                    <pre className="code-block w-full overflow-x-auto whitespace-pre-wrap break-words">{responsePreview}</pre>
+                    <div className="w-full max-w-full overflow-x-auto rounded-lg bg-slate-900">
+                      <pre className="code-block custom-scrollbar w-full break-all whitespace-pre-wrap text-xs md:text-sm">{responsePreview}</pre>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -171,6 +176,7 @@ export default function DemoSection() {
           </p>
         </article>
       </Reveal>
+      </div>
     </section>
   )
 }
