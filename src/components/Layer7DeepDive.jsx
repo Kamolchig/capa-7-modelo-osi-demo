@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { FileText, Key, Link2, MessageSquare, MessageSquareText } from 'lucide-react'
+import { FileJson, FileText, Key, Link2, List, MessageSquare, MessageSquareText, Shield } from 'lucide-react'
 import { Reveal } from './Reveal'
 import Layer7ConceptBlocks from './Layer7ConceptBlocks'
 
@@ -112,6 +112,37 @@ function CardBlock({ step, icon, title, idea, badges = [], bullets, example, dev
       </div>
 
       <Collapsible title="Ver más">{extra}</Collapsible>
+    </article>
+  )
+}
+
+function DeepDisclosure({ title, icon, defaultOpen = false, children }) {
+  const [open, setOpen] = useState(defaultOpen)
+  return (
+    <article className="card p-0">
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="flex w-full items-center justify-between gap-3 px-5 py-4 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/60"
+      >
+        <span className="flex items-center gap-2">
+          <span className="rounded-xl border border-indigo-200 bg-indigo-50 p-1.5 text-indigo-700">{icon}</span>
+          <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-lg font-semibold text-transparent">{title}</span>
+        </span>
+        <span className="text-xs font-semibold text-indigo-700">{open ? 'Ocultar' : 'Expandir'}</span>
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="overflow-hidden border-t border-slate-200/80"
+          >
+            <div className="px-5 py-4 text-sm leading-relaxed text-slate-700">{children}</div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </article>
   )
 }
@@ -343,6 +374,74 @@ export default function Layer7DeepDive() {
           </article>
         </Reveal>
       </div>
+
+      <Reveal delay={0.2}>
+        <section className="mt-8 space-y-4" aria-label="Profundización avanzada de Capa 7">
+          <DeepDisclosure title="Los Headers (Metadatos: El Contexto Oculto)" icon={<List className="h-4 w-4" />} defaultOpen>
+            <p>
+              Los headers son etiquetas que no ve el usuario, pero que le dicen al servidor cómo procesar el mensaje.
+            </p>
+            <div className="mt-3 grid gap-3 md:grid-cols-2">
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                <p className="font-semibold text-slate-900">Request Headers</p>
+                <ul className="mt-2 space-y-1">
+                  <li><span className="font-semibold">Authorization:</span> tu pase de entrada (token/credencial).</li>
+                  <li><span className="font-semibold">User-Agent:</span> quién eres: iPhone, Chrome, app móvil, etc.</li>
+                  <li><span className="font-semibold">Accept:</span> qué idioma de datos entiendes (JSON, HTML, etc.).</li>
+                </ul>
+              </div>
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                <p className="font-semibold text-slate-900">Response Headers</p>
+                <ul className="mt-2 space-y-1">
+                  <li><span className="font-semibold">Content-Type:</span> tipo de respuesta (ej: <code>application/json</code>).</li>
+                  <li><span className="font-semibold">Cache-Control:</span> cuánto tiempo guardar copia local.</li>
+                  <li><span className="font-semibold">Set-Cookie:</span> cómo el servidor te recuerda en próximas peticiones.</li>
+                </ul>
+              </div>
+            </div>
+          </DeepDisclosure>
+
+          <DeepDisclosure title="El Payload (El Cuerpo: El Mensaje Real)" icon={<FileJson className="h-4 w-4" />}>
+            <p>
+              Es la carga útil. Lo que realmente queremos enviar o recibir una vez que los headers abrieron la puerta.
+            </p>
+            <div className="mt-3 grid gap-3 md:grid-cols-2">
+              <div>
+                <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">Request Payload</p>
+                <pre className="rounded-xl bg-slate-950 p-3 text-xs text-cyan-200">{`{\n  "comentario": "¡Excelente expo!",\n  "id_post": 77\n}`}</pre>
+              </div>
+              <div>
+                <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">Response Payload</p>
+                <pre className="rounded-xl bg-slate-950 p-3 text-xs text-cyan-200">{`{\n  "status": "success",\n  "timestamp": "2026-02-09T13:30Z"\n}`}</pre>
+              </div>
+            </div>
+            <p className="mt-3">
+              El payload puede ser texto, imágenes o archivos, pero en la web moderna, JSON es el rey por ser ligero.
+            </p>
+          </DeepDisclosure>
+
+          <DeepDisclosure title="Seguridad Avanzada (HTTPS y TLS)" icon={<Shield className="h-4 w-4" />}>
+            <p>
+              En Capa 7, la seguridad no es opcional. HTTPS es el guardaespaldas de tus datos.
+            </p>
+            <ul className="mt-2 space-y-1">
+              <li><span className="font-semibold">Cifrado:</span> los datos viajan como ruido ilegible si alguien los intercepta.</li>
+              <li><span className="font-semibold">Integridad:</span> detecta cambios en el camino (mitiga Man-in-the-Middle).</li>
+              <li><span className="font-semibold">Autenticación:</span> el certificado digital confirma que el servidor es legítimo.</li>
+            </ul>
+            <div className="mt-3 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-emerald-800">
+              🔒 Conexión Segura
+            </div>
+          </DeepDisclosure>
+
+          <DeepDisclosure title="El Portero del Navegador (CORS)" icon={<Shield className="h-4 w-4" />}>
+            <p>
+              Cross-Origin Resource Sharing es una regla de seguridad de Capa 7 que impide que un sitio malicioso pida
+              tus datos privados de otro sitio sin permiso explícito del servidor.
+            </p>
+          </DeepDisclosure>
+        </section>
+      </Reveal>
 
       <Layer7ConceptBlocks />
 
