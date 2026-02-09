@@ -149,17 +149,19 @@ export default function Layer7DeepDive() {
             step={1}
             icon={<FileText className="h-6 w-6" />}
             title="Intención (método HTTP)"
-            idea={<><span className="font-semibold text-purple-600">GET</span> y <span className="font-semibold text-purple-600">POST</span> son verbos de la conversación. GET significa &quot;leer&quot; y POST significa &quot;escribir/crear&quot;.</>}
+            idea={<><span className="font-semibold text-purple-600">GET</span>, <span className="font-semibold text-purple-600">POST</span>, <span className="font-semibold text-purple-600">PUT</span> y <span className="font-semibold text-purple-600">PATCH</span> definen la intención real de la operación sobre el recurso.</>}
             badges={[
               { label: 'GET', className: 'rounded-full border border-purple-200 bg-purple-50 px-2 py-0.5 text-xs font-semibold text-purple-600' },
-              { label: 'POST', className: 'rounded-full border border-purple-200 bg-purple-50 px-2 py-0.5 text-xs font-semibold text-purple-600' }
+              { label: 'POST', className: 'rounded-full border border-purple-200 bg-purple-50 px-2 py-0.5 text-xs font-semibold text-purple-600' },
+              { label: 'PUT', className: 'rounded-full border border-purple-200 bg-purple-50 px-2 py-0.5 text-xs font-semibold text-purple-600' },
+              { label: 'PATCH', className: 'rounded-full border border-purple-200 bg-purple-50 px-2 py-0.5 text-xs font-semibold text-purple-600' }
             ]}
             bullets={[
-              '“Safe” significa que la acción no cambia datos: el botón de refrescar (GET) puede usarse muchas veces.',
-              '“Idempotente” significa que repetir la misma acción deja el mismo resultado final (como PUT/DELETE bien implementados).',
-              'Idempotente significa que si das 10 veces al botón de "Guardar", el sistema es lo suficientemente inteligente para no crear 10 perfiles iguales.'
+              'Idempotencia: GET y PUT son idempotentes (puedes repetirlos sin causar efectos secundarios extra), mientras que POST no lo es (cada click puede crear un duplicado).',
+              'PATCH actualiza solo un pedacito del recurso; PUT reemplaza el recurso completo.',
+              'En diseño de APIs, elegir bien el método evita errores de negocio y efectos no deseados.'
             ]}
-            example={`GET /v1/feed\nPOST /v1/messages { "text": "Hola" }\nPATCH /v1/users/42 { "bio": "Aprendiendo" }`}
+            example={`GET /v1/feed\nPUT /v1/users/42\nPATCH /v1/users/42 { "bio": "Actualizada" }\nPOST /v1/messages { "text": "Hola" }`}
             devtools={[
               { label: 'Method', description: '¿Qué acción pedí?' },
               { label: 'Payload', description: '¿Qué datos envié?' },
@@ -195,16 +197,16 @@ export default function Layer7DeepDive() {
             step={2}
             icon={<Link2 className="h-6 w-6" />}
             title="Recurso (URL y parámetros)"
-            idea={<><span className="font-semibold text-purple-600">URL</span> funciona como una dirección postal: la calle es el recurso y el número de departamento son los parámetros.</>}
+            idea={<>La <span className="font-semibold text-purple-600">URL</span> define exactamente a qué servidor, por qué canal y a qué recurso quieres acceder.</>}
             badges={[
-              { label: '/v1/users/42', className: 'rounded-full border border-slate-200 bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-700' }
+              { label: 'https://ejemplo.com:443/api/v1/users?id=10', className: 'rounded-full border border-slate-200 bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-700' }
             ]}
             bullets={[
-              'El path te dice sobre qué cosa trabajas (por ejemplo, /users/42).',
-              'La query afina cómo lo quieres recibir (por ejemplo, ?limit=10).',
-              'Versionar rutas (/v1) evita romper clientes cuando la app evoluciona.'
+              'Esquema: https (define el nivel de seguridad).',
+              'Host: ejemplo.com (apunta al servidor vía DNS) y puerto :443 (canal por defecto para HTTPS).',
+              'Path: /api/v1/users (jerarquía lógica de los datos) + Query String: ?id=10 (filtrar o buscar).'
             ]}
-            example={`/v1/users/42/profile?fields=public\n/v1/feed?limit=10&cursor=abc`}
+            example={`https://ejemplo.com:443/api/v1/users?id=10\nhttps://api.redes.edu:443/v1/feed?limit=10&cursor=abc`}
             devtools={[
               { label: 'Method', description: '¿Qué acción pedí?' },
               { label: 'URL', description: '¿A qué recurso se lo pedí?' },
@@ -253,18 +255,20 @@ export default function Layer7DeepDive() {
             step={3}
             icon={<MessageSquareText className="h-6 w-6" />}
             title="Significado (status + headers + payload)"
-            idea={<><span className="font-semibold text-purple-600">200 OK</span> es semáforo en verde; <span className="font-semibold text-purple-600">404</span> es una calle sin salida; y <span className="font-semibold text-purple-600">500</span> es que el puente se cayó.</>}
+            idea={<>El código de estado no es decoración: expresa la semántica de la respuesta del servidor en un rango bien definido.</>}
             badges={[
-              { label: '200 OK', className: 'rounded-full border border-purple-200 bg-purple-50 px-2 py-0.5 text-xs font-semibold text-purple-600' },
-              { label: '404', className: 'rounded-full border border-purple-200 bg-purple-50 px-2 py-0.5 text-xs font-semibold text-purple-600' },
-              { label: '500', className: 'rounded-full border border-purple-200 bg-purple-50 px-2 py-0.5 text-xs font-semibold text-purple-600' }
+              { label: '1xx', className: 'rounded-full border border-purple-200 bg-purple-50 px-2 py-0.5 text-xs font-semibold text-purple-600' },
+              { label: '2xx', className: 'rounded-full border border-purple-200 bg-purple-50 px-2 py-0.5 text-xs font-semibold text-purple-600' },
+              { label: '3xx', className: 'rounded-full border border-purple-200 bg-purple-50 px-2 py-0.5 text-xs font-semibold text-purple-600' },
+              { label: '4xx', className: 'rounded-full border border-purple-200 bg-purple-50 px-2 py-0.5 text-xs font-semibold text-purple-600' },
+              { label: '5xx', className: 'rounded-full border border-purple-200 bg-purple-50 px-2 py-0.5 text-xs font-semibold text-purple-600' }
             ]}
             bullets={[
-              'Status: te confirma si la solicitud fue aceptada o falló.',
-              'Headers: explican formato, caché y reglas de interpretación.',
-              'Un Status 200 es como un semáforo en verde; el 404 es una calle sin salida; y el 500 es que el puente se cayó.'
+              '1xx: informativos (el proceso continúa); 2xx: éxito (todo salió como se esperaba).',
+              '3xx: redirección (el recurso se movió o se sirve desde caché).',
+              '4xx: error del cliente (formato, autenticación o permisos); 5xx: error del servidor (falló backend).'
             ]}
-            example={`HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: max-age=60\n\n{ "items": ["post1", "post2"], "next": "/v1/feed?cursor=def" }`}
+            example={`HTTP/1.1 200 OK\nHTTP/1.1 302 Found\nHTTP/1.1 404 Not Found\nHTTP/1.1 500 Internal Server Error`}
             devtools={[
               { label: 'Status', description: '¿Me hicieron caso?' },
               { label: 'Headers', description: 'La letra chiquita del mensaje.' },
@@ -288,6 +292,55 @@ export default function Layer7DeepDive() {
               </>
             }
           />
+        </Reveal>
+      </div>
+
+      <div className="mt-6 grid gap-5 lg:grid-cols-2">
+        <Reveal delay={0.14}>
+          <article className="card p-6 transition hover:ring-1 hover:ring-indigo-300">
+            <div className="flex items-start gap-3">
+              <div className="rounded-2xl border border-indigo-200 bg-indigo-50 p-2.5 text-indigo-700">
+                <MessageSquare className="h-6 w-6" />
+              </div>
+              <div>
+                <h3 className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-2xl font-semibold text-transparent">
+                  El Mensaje Oculto (Headers)
+                </h3>
+              </div>
+            </div>
+            <p className="mt-4 text-sm leading-relaxed tracking-[0.01em] text-slate-700">
+              Los headers son metadatos de la conversación HTTP. No son el “dato principal”, pero definen cómo debe
+              interpretarse el mensaje y qué contexto tiene la solicitud.
+            </p>
+            <ul className="mt-3 space-y-1 text-sm text-slate-700">
+              <li><span className="font-semibold">User-Agent:</span> informa qué navegador/cliente hace la petición.</li>
+              <li><span className="font-semibold">Content-Type:</span> indica si el cuerpo es texto, imagen, JSON u otro formato.</li>
+              <li><span className="font-semibold">Authorization:</span> aporta identidad/credenciales para acceso protegido.</li>
+            </ul>
+          </article>
+        </Reveal>
+
+        <Reveal delay={0.18}>
+          <article className="card p-6 transition hover:ring-1 hover:ring-indigo-300">
+            <div className="flex items-start gap-3">
+              <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-2.5 text-emerald-700">
+                <Key className="h-6 w-6" />
+              </div>
+              <div>
+                <h3 className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-2xl font-semibold text-transparent">
+                  Seguridad (HTTPS y TLS)
+                </h3>
+              </div>
+            </div>
+            <p className="mt-4 text-sm leading-relaxed tracking-[0.01em] text-slate-700">
+              HTTPS = HTTP + TLS. Antes de intercambiar payload real, ocurre el <span className="font-semibold">handshake</span>:
+              cliente y servidor negocian parámetros criptográficos e intercambian claves para establecer un canal cifrado.
+            </p>
+            <p className="mt-3 text-sm leading-relaxed tracking-[0.01em] text-slate-700">
+              Ese túnel evita que terceros lean o alteren el contenido en tránsito, mitigando ataques de tipo
+              <span className="font-semibold"> Man-in-the-Middle</span>.
+            </p>
+          </article>
         </Reveal>
       </div>
 
