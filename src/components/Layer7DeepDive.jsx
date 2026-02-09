@@ -176,6 +176,9 @@ export default function Layer7DeepDive() {
           <p className="mt-3 text-sm leading-relaxed tracking-[0.01em] text-slate-700">
             Antes de pedir datos, la Capa 7 usa <span className="font-semibold text-purple-600">DNS</span>: es la guía telefónica que traduce nombres (google.com) en direcciones que internet entiende. Sin esto, tendrías que memorizar números complejos para entrar a cualquier red social.
           </p>
+          <p className="mt-2 text-sm leading-relaxed tracking-[0.01em] text-slate-700">
+            DNS es el traductor: tú escribes <code>instagram.com</code> y él te entrega una IP como <code>157.240.x.x</code>. Sin él, estaríamos perdidos en un mar de números.
+          </p>
         </article>
       </Reveal>
 
@@ -240,7 +243,8 @@ export default function Layer7DeepDive() {
             bullets={[
               'Esquema: https (define el nivel de seguridad).',
               'Host: ejemplo.com (apunta al servidor vía DNS) y puerto :443 (canal por defecto para HTTPS).',
-              'Path: /api/v1/users (jerarquía lógica de los datos) + Query String: ?id=10 (filtrar o buscar).'
+              'Path: /api/v1/users (jerarquía lógica de los datos) + Query String: ?id=10 (filtrar o buscar).',
+              'Nota técnica: El puerto vive en la Capa 4, pero la Capa 7 lo usa para decidir si la conexión será segura (HTTPS) o no.'
             ]}
             example={`https://ejemplo.com:443/api/v1/users?id=10\nhttps://api.redes.edu:443/v1/feed?limit=10&cursor=abc`}
             devtools={[
@@ -320,6 +324,7 @@ export default function Layer7DeepDive() {
                   <li><span className="font-medium">401:</span> falta autenticación válida (token ausente, vencido o incorrecto).</li>
                   <li><span className="font-medium">403:</span> el usuario está autenticado, pero no tiene autorización.</li>
                   <li><span className="font-medium">5xx:</span> el servidor falló al procesar una solicitud válida.</li>
+                  <li><span className="font-medium">418 - I&apos;m a teapot:</span> un código real creado como broma que demuestra que HTTP es un lenguaje vivo.</li>
                 </ul>
                 <p className="mt-2 text-xs text-slate-600">
                   Nota: el caché condicional puede confundir el diagnóstico porque un 304 evita descargar el contenido otra vez;

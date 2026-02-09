@@ -36,4 +36,4 @@ Para evitar confusión por caché, el fetch real usa:
 - GitHub Pages: construir con `npm run build` y publicar `dist/`.
 - Vercel: framework Vite, output `dist`.
 
-Autora visible en UI: **Kamila García**.
+Autora visible en UI: **EQUIPO 7**.

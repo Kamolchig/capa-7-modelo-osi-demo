@@ -30,7 +30,7 @@ export default function Navbar() {
         <button aria-label="Abrir menú" className="ml-auto rounded-lg border border-slate-300 px-3 py-1.5 text-sm md:hidden" onClick={() => setOpen((v) => !v)}>Menú</button>
       </nav>
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 pb-2 sm:px-6 lg:px-8">
-        <p className="text-xs text-slate-500">By <span className="font-medium text-indigo-600">Kamila García</span></p>
+        <p className="text-xs text-slate-500">By <span className="font-medium text-indigo-600">EQUIPO 7</span></p>
       </div>
       {open && (
         <div className="border-t border-slate-200 bg-white px-4 py-3 md:hidden">

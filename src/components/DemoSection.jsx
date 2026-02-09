@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { Copy } from 'lucide-react'
+import { ArrowRight, Braces, Copy, Download, Send } from 'lucide-react'
 import { Reveal } from './Reveal'
 
 const simulations = {
@@ -62,6 +62,50 @@ export default function DemoSection() {
         <h2 className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-4xl font-semibold text-transparent sm:text-5xl">Demo interactiva</h2>
         <p className="mt-3 max-w-4xl text-slate-600">Actividad de aprendizaje: elige un escenario y observa qué cambia en Network.</p>
       </Reveal>
+
+      <Reveal delay={0.02}>
+        <article className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-6">
+          <h3 className="text-lg font-semibold text-slate-900">¿Qué estamos simulando?</h3>
+          <p className="mt-3 text-sm leading-relaxed text-slate-700">
+            Al pulsar el botón, tu navegador genera una solicitud real de Capa 7. No es una animación; es una petición HTTP auténtica que viaja a un servidor para pedir información.
+          </p>
+        </article>
+      </Reveal>
+
+      <Reveal delay={0.04}>
+        <article className="mt-5 rounded-2xl border border-slate-200 bg-slate-50 p-6">
+          <h3 className="text-lg font-semibold text-slate-900">El Ciclo de Vida del Clic</h3>
+          <div className="mt-3 grid gap-4 md:grid-cols-2">
+            <div className="rounded-xl border border-indigo-200 bg-white p-4">
+              <div className="flex items-center gap-2">
+                <Send className="h-4 w-4 text-indigo-700" />
+                <p className="text-sm font-semibold text-indigo-700">LA SOLICITUD (The Request)</p>
+              </div>
+              <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                Al presionar, el navegador emite un mensaje HTTP. Este incluye el <code>MÉTODO</code> (<code>GET</code>),
+                la <code>URL</code> (el destino) y los <code>HEADERS</code> (como <code>Accept: application/json</code>,
+                que le dice al servidor que esperamos datos, no una página completa).
+              </p>
+            </div>
+            <div className="rounded-xl border border-emerald-200 bg-white p-4">
+              <div className="flex items-center gap-2">
+                <Download className="h-4 w-4 text-emerald-700" />
+                <p className="text-sm font-semibold text-emerald-700">LA RESPUESTA (The Response)</p>
+              </div>
+              <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                El servidor procesa la petición y devuelve un <code>STATUS</code> (<code>200 OK</code>) y un <code>PAYLOAD</code>.
+                El payload es el <code>JSON</code> que ves en pantalla: una estructura de datos organizada que la aplicación usa
+                para mostrarte información real.
+              </p>
+            </div>
+          </div>
+          <div className="mt-3 flex items-center gap-2 text-xs text-slate-500">
+            <ArrowRight className="h-3.5 w-3.5" />
+            Flujo de datos: Cliente <code>GET</code> → Servidor <code>200 OK</code> + <code>JSON</code>
+          </div>
+        </article>
+      </Reveal>
+
       <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_1.2fr]">
         <Reveal>
           <article className="card p-7">
@@ -107,6 +151,26 @@ export default function DemoSection() {
           </article>
         </Reveal>
       </div>
+
+      <Reveal delay={0.1}>
+        <article className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-6">
+          <h3 className="text-lg font-semibold text-slate-900">Guía de Lectura de la Respuesta</h3>
+          <ul className="mt-3 space-y-2 text-sm text-slate-700">
+            <li><span className="font-semibold">Status 200:</span> significa &quot;OK&quot;. El servidor procesó tu solicitud y aquí tienes tus datos.</li>
+            <li className="flex gap-2">
+              <Braces className="mt-0.5 h-4 w-4 text-violet-700" />
+              <span><span className="font-semibold">El JSON:</span> fíjate en la estructura <code>{`{ "clave": "valor" }`}</code>.
+                Es como una lista de etiquetas. Es el estándar de oro de la Capa 7 porque es ligero, fácil de leer para
+                humanos y perfecto para que las computadoras lo procesen sin errores.</span>
+            </li>
+          </ul>
+          <p className="mt-4 rounded-xl border border-indigo-200 bg-indigo-50 px-3 py-2 text-sm font-medium text-indigo-800">
+            ¡El secreto revelado!: Lo que ves en el cuadro de &quot;Respuesta del Servidor&quot; de esta demo es exactamente lo mismo
+            que verías en la pestaña &quot;Response&quot; de DevTools si inspeccionaras esta petición. La Capa 7 es transparente cuando
+            sabes dónde mirar.
+          </p>
+        </article>
+      </Reveal>
     </section>
   )
 }

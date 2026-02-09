@@ -68,7 +68,12 @@ export default function FooterSection() {
         </div>
       </Reveal>
 
-      <footer className="mt-10 border-t border-slate-200 pt-6 text-sm text-slate-500">Proyecto académico — Kamila García</footer>
+      <footer className="mt-10 border-t border-slate-200 pt-6 text-sm text-slate-500">
+        Proyecto académico —
+        <span className="ml-2 rounded-full border border-indigo-200 bg-indigo-50 px-2.5 py-1 font-semibold tracking-wide text-indigo-700">
+          EQUIPO 7
+        </span>
+      </footer>
     </section>
   )
 }
