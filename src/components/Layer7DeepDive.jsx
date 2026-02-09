@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { FileJson, FileText, Key, Link2, List, MessageSquare, MessageSquareText, Shield } from 'lucide-react'
+import { FileText, Key, Link2, MessageSquare, MessageSquareText, Settings2, ShieldCheck, Terminal } from 'lucide-react'
 import { Reveal } from './Reveal'
 import Layer7ConceptBlocks from './Layer7ConceptBlocks'
 
@@ -116,12 +116,12 @@ function CardBlock({ step, icon, title, idea, badges = [], bullets, example, dev
   )
 }
 
-function DeepDisclosure({ title, icon, defaultOpen = false, children }) {
-  const [open, setOpen] = useState(defaultOpen)
+function DeepDisclosure({ id, activeId, onToggle, title, icon, children }) {
+  const open = activeId === id
   return (
     <article className="card p-0">
       <button
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => onToggle(id)}
         className="flex w-full items-center justify-between gap-3 px-5 py-4 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/60"
       >
         <span className="flex items-center gap-2">
@@ -148,6 +148,11 @@ function DeepDisclosure({ title, icon, defaultOpen = false, children }) {
 }
 
 export default function Layer7DeepDive() {
+  const [activeAdvanced, setActiveAdvanced] = useState('headers')
+  const onToggleAdvanced = (id) => {
+    setActiveAdvanced((prev) => (prev === id ? '' : id))
+  }
+
   return (
     <section id="capa-7" className="scroll-mt-28 py-24">
       <Reveal>
@@ -328,73 +333,71 @@ export default function Layer7DeepDive() {
 
       <Reveal delay={0.2}>
         <section className="mt-8 space-y-4" aria-label="Profundización avanzada de Capa 7">
-          <DeepDisclosure title="Los Headers (Metadatos: El Contexto Oculto)" icon={<List className="h-4 w-4" />} defaultOpen>
+          <DeepDisclosure
+            id="headers"
+            activeId={activeAdvanced}
+            onToggle={onToggleAdvanced}
+            title="Headers: El ADN de la Solicitud"
+            icon={<Settings2 className="h-4 w-4" />}
+          >
             <p>
-              Los <code>headers</code> son pares <code>llave-valor</code> que definen reglas y contexto antes de procesar el cuerpo del mensaje.
+              Aquí está el contexto que define cómo debe comportarse la conversación entre cliente y servidor.
             </p>
-            <div className="mt-3 grid gap-3 md:grid-cols-2">
-              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                <p className="font-semibold text-slate-900">Request Headers</p>
-                <ul className="mt-2 space-y-1">
-                  <li><span className="font-semibold"><code>User-Agent</code>:</span> identifica dispositivo/cliente (iPhone, Chrome, app móvil).</li>
-                  <li><span className="font-semibold"><code>Accept-Language</code>:</span> idioma preferido para la respuesta (ej. <code>es-MX</code>).</li>
-                  <li><span className="font-semibold"><code>Authorization</code>:</span> aquí suele viajar el token JWT para autenticación.</li>
-                </ul>
-              </div>
-              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                <p className="font-semibold text-slate-900">Response Headers</p>
-                <ul className="mt-2 space-y-1">
-                  <li><span className="font-semibold"><code>Content-Type</code>:</span> formato del dato (ej. <code>application/json</code>).</li>
-                  <li><span className="font-semibold"><code>Cache-Control</code>:</span> instrucciones de caché para el navegador.</li>
-                  <li><span className="font-semibold"><code>Server</code>:</span> software/plataforma que responde la petición.</li>
-                </ul>
-              </div>
-            </div>
+            <ul className="mt-3 space-y-2">
+              <li><span className="font-semibold"><code>User-Agent</code>:</span> le dice al servidor si eres un iPhone o un PC para que te envíe la versión correcta de la web.</li>
+              <li><span className="font-semibold"><code>Authorization: Bearer ...</code>:</span> es como mostrar un carnet VIP en la puerta de una discoteca.</li>
+              <li><span className="font-semibold"><code>Content-Type</code> vs <code>Accept</code>:</span> uno dice qué envío y el otro dice qué espero recibir. Si no coinciden, la comunicación falla.</li>
+            </ul>
           </DeepDisclosure>
 
-          <DeepDisclosure title="El Payload (El Cuerpo: El Mensaje Real)" icon={<FileJson className="h-4 w-4" />}>
+          <DeepDisclosure
+            id="payload"
+            activeId={activeAdvanced}
+            onToggle={onToggleAdvanced}
+            title="Payload: La Carne del Mensaje"
+            icon={<Terminal className="h-4 w-4" />}
+          >
             <p>
-              Es la carga útil: lo que realmente enviamos o recibimos una vez definidos los metadatos de transporte semántico.
+              Aquí viaja el dato real de negocio, más allá de los metadatos de control.
             </p>
-            <div className="mt-3 grid gap-3 md:grid-cols-2">
-              <div>
-                <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">Request Payload</p>
-                <pre className="rounded-xl bg-slate-950 p-3 text-xs text-cyan-200">{`{\n  "texto": "Hola",\n  "img": "url"\n}`}</pre>
-              </div>
-              <div>
-                <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">Response Payload</p>
-                <pre className="rounded-xl bg-slate-950 p-3 text-xs text-cyan-200">{`{\n  "status": "ok",\n  "post_id": 901,\n  "meta": {\n    "procesado_en_ms": 23\n  }\n}`}</pre>
-              </div>
-            </div>
-            <p className="mt-3">
-              JSON reemplazó en gran parte a XML en APIs web por ser más ligero, menos verboso y nativo en JavaScript.
-            </p>
+            <ul className="mt-3 space-y-2">
+              <li><span className="font-semibold">Request Body:</span> solo existe en métodos como <code>POST</code>/<code>PUT</code>/<code>PATCH</code>. Es donde viaja tu contraseña o el texto de tu tweet.</li>
+              <li><span className="font-semibold">Response Body:</span> es lo que el servidor devuelve, por ejemplo JSON con fotos o HTML de la página.</li>
+              <li><span className="font-semibold">JSON y lenguaje agnóstico:</span> un servidor en Java puede hablar con un cliente en JavaScript gracias a este formato.</li>
+            </ul>
           </DeepDisclosure>
 
-          <DeepDisclosure title="Seguridad Avanzada (HTTPS y TLS)" icon={<Shield className="h-4 w-4" />}>
+          <DeepDisclosure
+            id="tls"
+            activeId={activeAdvanced}
+            onToggle={onToggleAdvanced}
+            title="Seguridad y el Túnel SSL/TLS"
+            icon={<ShieldCheck className="h-4 w-4" />}
+          >
             <p>
-              En Capa 7, HTTPS protege la conversación aplicando TLS antes de transmitir HTTP real.
+              El handshake no es magia: es un acuerdo matemático. Cliente y servidor eligen una llave de sesión para que nadie en el camino pueda leer el mensaje.
             </p>
             <ul className="mt-2 space-y-1">
-              <li><span className="font-semibold">Handshake TLS:</span> negociación inicial de llaves y algoritmos antes de enviar datos de aplicación.</li>
-              <li><span className="font-semibold">Certificados SSL/TLS:</span> el servidor demuestra su identidad con firma digital válida.</li>
-              <li><span className="font-semibold">Asimétrico + Simétrico:</span> se usa criptografía de llave pública para iniciar y sesión simétrica para rendimiento.</li>
+              <li><span className="font-semibold">Handshake:</span> negociación de parámetros criptográficos antes del HTTP real.</li>
+              <li><span className="font-semibold">El candado:</span> HTTPS es HTTP viajando dentro de un sobre cifrado.</li>
+              <li><span className="font-semibold">Sin TLS:</span> tus contraseñas podrían viajar en texto plano por el Wi-Fi.</li>
             </ul>
             <div className="mt-3 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-emerald-800">
               🔒 Conexión Segura
             </div>
           </DeepDisclosure>
 
-          <DeepDisclosure title="El Portero del Navegador (CORS)" icon={<Shield className="h-4 w-4" />}>
+          <DeepDisclosure
+            id="cors"
+            activeId={activeAdvanced}
+            onToggle={onToggleAdvanced}
+            title="CORS: El Guardaespaldas del Navegador"
+            icon={<ShieldCheck className="h-4 w-4" />}
+          >
             <p>
-              Problema: un sitio A no debe leer datos privados de sitio B automáticamente.
-            </p>
-            <p>
-              Solución: el servidor devuelve <code>Access-Control-Allow-Origin</code> para autorizar explícitamente qué orígenes pueden leer la respuesta.
-            </p>
-            <p>
-              Preflight: en operaciones sensibles, el navegador envía primero una petición <code>OPTIONS</code> “invisible”
-              para validar permisos antes de la solicitud real.
+              Antes de enviar tus datos, el navegador hace una pregunta invisible: <span className="font-semibold">preflight <code>OPTIONS</code></span>.
+              Básicamente pregunta: “¿Tienes permiso para recibir esto?”.
+              Si el servidor no responde con headers CORS válidos, el navegador bloquea la respuesta por tu seguridad.
             </p>
           </DeepDisclosure>
         </section>

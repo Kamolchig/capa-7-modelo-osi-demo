@@ -5,8 +5,6 @@ import BridgeConcept from './components/BridgeConcept'
 import OsiOverview from './components/OsiOverview'
 import Layer7DeepDive from './components/Layer7DeepDive'
 import StatusCodesSection from './components/StatusCodesSection'
-import HeadersPayloadSection from './components/HeadersPayloadSection'
-import SecuritySection from './components/SecuritySection'
 import DiagnosticsSection from './components/DiagnosticsSection'
 import DemoSection from './components/DemoSection'
 import FooterSection from './components/FooterSection'
@@ -23,8 +21,6 @@ export default function App() {
         <BridgeConcept />
         <Layer7DeepDive />
         <StatusCodesSection />
-        <HeadersPayloadSection />
-        <SecuritySection />
         <DiagnosticsSection />
         <DemoSection />
         <FooterSection />
