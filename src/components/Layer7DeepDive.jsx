@@ -152,8 +152,6 @@ export default function Layer7DeepDive() {
   const onToggleAdvanced = (id) => {
     setActiveAdvanced((prev) => (prev === id ? '' : id))
   }
-  const qrValue = encodeURIComponent('https://donde-la-red-entiende-al-usuario.vercel.app/')
-  const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${qrValue}`
 
   return (
     <section id="capa-7" className="scroll-mt-28 py-24">
@@ -170,23 +168,6 @@ export default function Layer7DeepDive() {
         <p className="mt-3 max-w-4xl text-base text-slate-700 sm:text-lg">
           Así es como tu teléfono le pide cosas a Internet: intención, recurso y respuesta.
         </p>
-      </Reveal>
-
-      <Reveal delay={0.01}>
-        <article className="card mx-auto mt-5 w-full max-w-xs p-4 text-center">
-          <div className="mx-auto w-fit rounded-2xl bg-gradient-to-r from-[#F58529] via-[#DD2A7B] to-[#515BD4] p-[2px]">
-            <div className="rounded-2xl bg-white p-2">
-              <img
-                src={qrSrc}
-                alt="QR para abrir la guía en móvil"
-                width="160"
-                height="160"
-                className="mx-auto block h-auto max-w-full rounded-lg"
-              />
-            </div>
-          </div>
-          <p className="mt-3 text-sm text-slate-600">Escanea para llevar la guía a tu móvil 🚀</p>
-        </article>
       </Reveal>
 
       <Reveal delay={0.02}>

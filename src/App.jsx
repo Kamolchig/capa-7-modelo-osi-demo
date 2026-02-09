@@ -1,6 +1,7 @@
 import ParticleField from './components/ParticleField'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
+import QuickAccessQR from './components/QuickAccessQR'
 import BridgeConcept from './components/BridgeConcept'
 import OsiOverview from './components/OsiOverview'
 import Layer7DeepDive from './components/Layer7DeepDive'
@@ -17,6 +18,7 @@ export default function App() {
       <Navbar />
       <main className="relative z-10 mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
         <Hero />
+        <QuickAccessQR />
         <OsiOverview />
         <BridgeConcept />
         <Layer7DeepDive />
