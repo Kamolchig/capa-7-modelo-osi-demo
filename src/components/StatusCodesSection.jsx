@@ -27,7 +27,7 @@ const cards = [
 export default function StatusCodesSection() {
   return (
     <section id="status" className="scroll-mt-28 py-24">
-      <Reveal><h2 className="text-4xl font-semibold text-[#0B1220] sm:text-5xl">HTTP Status Codes (detalle práctico)</h2></Reveal>
+      <Reveal><h2 className="text-4xl font-semibold text-[#0B1220] sm:text-5xl">HTTP Status Codes</h2></Reveal>
       <div className="mt-6 grid gap-3 md:grid-cols-2 lg:grid-cols-4">
         {family.map((f, i) => (
           <Reveal key={f[0]} delay={i * 0.04}><div className="card p-4"><p className="font-semibold text-indigo-700">{f[0]}</p><p className="mt-1 text-sm text-slate-600">{f[1]}</p></div></Reveal>
