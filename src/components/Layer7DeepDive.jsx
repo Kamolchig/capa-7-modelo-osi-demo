@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import { FileText, Key, Link2, MessageSquare, MessageSquareText } from 'lucide-react'
 import { Reveal } from './Reveal'
+import Layer7ConceptBlocks from './Layer7ConceptBlocks'
 
 const LABEL_KEY_POINTS = 'PUNTOS CLAVE'
 
@@ -18,13 +20,19 @@ function CodeBlock({ children }) {
 
 function DevtoolsChips({ items }) {
   return (
-    <div className="mt-2 flex flex-wrap gap-2">
+    <ul className="mt-2 space-y-2 text-sm text-slate-700">
       {items.map((item) => (
-        <span key={item} className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs text-slate-700">
-          {item}
-        </span>
+        <li key={item.label} className="flex items-start gap-2">
+          <span className="mt-1 h-1.5 w-1.5 rounded-full bg-indigo-500" />
+          <span>
+            <span className="rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-xs font-semibold text-slate-700">
+              {item.label}
+            </span>{' '}
+            <span className="text-sm text-slate-600">{item.description}</span>
+          </span>
+        </li>
       ))}
-    </div>
+    </ul>
   )
 }
 
@@ -55,21 +63,38 @@ function Collapsible({ title, children }) {
   )
 }
 
-function CardBlock({ title, idea, bullets, example, devtools, extra }) {
+function CardBlock({ step, icon, title, idea, badges = [], bullets, example, devtools, extra }) {
   return (
     <article className="card p-6 transition hover:ring-1 hover:ring-indigo-300">
-      <h3 className="text-2xl font-semibold text-slate-900">{title}</h3>
+      <div className="flex items-start gap-3">
+        <div className="rounded-2xl border border-indigo-200 bg-indigo-50 p-2.5 text-indigo-700">
+          {icon}
+        </div>
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-indigo-600">Paso {step}</p>
+          <h3 className="mt-1 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-2xl font-semibold text-transparent">{title}</h3>
+        </div>
+      </div>
 
       <div className="mt-4 border-t border-slate-200/80 pt-3">
         <SectionLabel>Idea clave</SectionLabel>
-        <p className="mt-2 text-sm text-slate-700">{idea}</p>
+        <p className="mt-2 text-sm leading-relaxed tracking-[0.01em] text-slate-700">{idea}</p>
+        {badges.length > 0 && (
+          <div className="mt-2 flex flex-wrap gap-2">
+            {badges.map((badge) => (
+              <span key={badge.label} className={badge.className}>
+                {badge.label}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="mt-4 border-t border-slate-200/80 pt-3">
         <SectionLabel>{LABEL_KEY_POINTS}</SectionLabel>
-        <ul className="mt-2 space-y-1 text-sm text-slate-700">
+        <ul className="mt-2 space-y-1 text-sm leading-relaxed tracking-[0.01em] text-slate-700">
           {bullets.map((b) => (
-            <li key={b} className="flex gap-2"><span className="mt-1 h-1.5 w-1.5 rounded-full bg-indigo-500" />{b}</li>
+            <li key={b} className="flex gap-2"><span className="text-emerald-600">✔️</span>{b}</li>
           ))}
         </ul>
       </div>
@@ -81,7 +106,9 @@ function CardBlock({ title, idea, bullets, example, devtools, extra }) {
 
       <div className="mt-4 border-t border-slate-200/80 pt-3">
         <SectionLabel>En DevTools mira</SectionLabel>
-        <DevtoolsChips items={devtools} />
+        <div className="mt-2 rounded-xl border-l-4 border-purple-400 bg-purple-50/50 p-3">
+          <DevtoolsChips items={devtools} />
+        </div>
       </div>
 
       <Collapsible title="Ver más">{extra}</Collapsible>
@@ -93,24 +120,51 @@ export default function Layer7DeepDive() {
   return (
     <section id="capa-7" className="scroll-mt-28 py-24">
       <Reveal>
-        <h2 className="text-4xl font-semibold text-[#0B1220] sm:text-5xl">Capa 7 en profundidad</h2>
+        <motion.h2
+          initial={{ opacity: 0, y: 8, textShadow: '0 0 0 rgba(147,51,234,0)' }}
+          whileInView={{ opacity: 1, y: 0, textShadow: '0 0 18px rgba(147,51,234,0.12)' }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+          className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-4xl font-semibold text-transparent sm:text-5xl"
+        >
+          Capa 7 en profundidad
+        </motion.h2>
         <p className="mt-3 max-w-4xl text-base text-slate-700 sm:text-lg">
-          En Capa 7, HTTP define intención (método), recurso (URL) y significado (respuesta).
+          Así es como tu teléfono le pide cosas a Internet: intención, recurso y respuesta.
         </p>
+      </Reveal>
+
+      <Reveal delay={0.02}>
+        <article className="card mt-6 border-purple-200 bg-purple-50 p-6">
+          <h3 className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-xl font-semibold text-transparent">Guía de conversación Humano-Servidor</h3>
+          <p className="mt-3 text-sm leading-relaxed tracking-[0.01em] text-slate-700">
+            Antes de pedir datos, la Capa 7 usa <span className="font-semibold text-purple-600">DNS</span>: es la guía telefónica que traduce nombres (google.com) en direcciones que internet entiende. Sin esto, tendrías que memorizar números complejos para entrar a cualquier red social.
+          </p>
+        </article>
       </Reveal>
 
       <div className="mt-8 grid gap-5 lg:grid-cols-3">
         <Reveal>
           <CardBlock
+            step={1}
+            icon={<FileText className="h-6 w-6" />}
             title="Intención (método HTTP)"
-            idea="El método HTTP indica qué quiere hacer el cliente: leer, crear, actualizar o eliminar. Piensa en el método como el verbo de una oración: primero dices la acción y luego el servidor actúa. “Safe” significa que no debería cambiar datos, e “idempotente” que repetir la misma operación no debería cambiar el resultado final."
-            bullets={[
-              'Si una acción es de lectura (GET), importa porque puedes repetirla sin alterar información.',
-              'Si una acción es idempotente (como PUT/DELETE en la práctica), importa porque reintentos no deberían duplicar efectos.',
-              'POST y PATCH requieren más cuidado: su comportamiento depende de la implementación de la API y la lógica de negocio.'
+            idea={<><span className="font-semibold text-purple-600">GET</span> y <span className="font-semibold text-purple-600">POST</span> son verbos de la conversación. GET significa &quot;leer&quot; y POST significa &quot;escribir/crear&quot;.</>}
+            badges={[
+              { label: 'GET', className: 'rounded-full border border-purple-200 bg-purple-50 px-2 py-0.5 text-xs font-semibold text-purple-600' },
+              { label: 'POST', className: 'rounded-full border border-purple-200 bg-purple-50 px-2 py-0.5 text-xs font-semibold text-purple-600' }
             ]}
-            example={`GET /v1/feed?limit=10\nPOST /v1/messages { "text": "Hola, clase" }\nPATCH /v1/users/42 { "bio": "Aprendiendo OSI" }`}
-            devtools={['Method', 'Payload', 'Initiator']}
+            bullets={[
+              '“Safe” significa que la acción no cambia datos: el botón de refrescar (GET) puede usarse muchas veces.',
+              '“Idempotente” significa que repetir la misma acción deja el mismo resultado final (como PUT/DELETE bien implementados).',
+              'Idempotente significa que si das 10 veces al botón de "Guardar", el sistema es lo suficientemente inteligente para no crear 10 perfiles iguales.'
+            ]}
+            example={`GET /v1/feed\nPOST /v1/messages { "text": "Hola" }\nPATCH /v1/users/42 { "bio": "Aprendiendo" }`}
+            devtools={[
+              { label: 'Method', description: '¿Qué acción pedí?' },
+              { label: 'Payload', description: '¿Qué datos envié?' },
+              { label: 'Headers', description: 'La letra chiquita del mensaje.' }
+            ]}
             extra={
               <>
                 <div className="overflow-hidden rounded-xl border border-slate-200">
@@ -138,27 +192,57 @@ export default function Layer7DeepDive() {
 
         <Reveal delay={0.06}>
           <CardBlock
+            step={2}
+            icon={<Link2 className="h-6 w-6" />}
             title="Recurso (URL y parámetros)"
-            idea="La URL define sobre qué cosa se está operando. El path identifica el recurso principal y los parámetros de query ajustan cómo lo quieres recibir. Es similar a pedir un libro por código y luego elegir edición o cantidad de resultados."
+            idea={<><span className="font-semibold text-purple-600">URL</span> funciona como una dirección postal: la calle es el recurso y el número de departamento son los parámetros.</>}
+            badges={[
+              { label: '/v1/users/42', className: 'rounded-full border border-slate-200 bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-700' }
+            ]}
             bullets={[
-              'Path params importan porque apuntan a una entidad concreta (por ejemplo, un usuario específico).',
-              'Query params importan porque permiten filtrar y paginar sin cambiar la identidad del recurso.',
-              'Versionar (por ejemplo /v1) y nombrar de forma consistente ayuda a mantener APIs claras y mantenibles.'
+              'El path te dice sobre qué cosa trabajas (por ejemplo, /users/42).',
+              'La query afina cómo lo quieres recibir (por ejemplo, ?limit=10).',
+              'Versionar rutas (/v1) evita romper clientes cuando la app evoluciona.'
             ]}
             example={`/v1/users/42/profile?fields=public\n/v1/feed?limit=10&cursor=abc`}
-            devtools={['Request URL', 'Query String Params', 'Initiator']}
+            devtools={[
+              { label: 'Method', description: '¿Qué acción pedí?' },
+              { label: 'URL', description: '¿A qué recurso se lo pedí?' },
+              { label: 'Headers', description: 'La letra chiquita del mensaje.' }
+            ]}
             extra={
               <>
-                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Anti-ejemplos</p>
-                <ul className="mt-2 space-y-1 text-sm text-slate-700">
-                  <li>Token sensible en URL/query.</li>
-                  <li>Rutas ambiguas como <code>/doStuff</code>.</li>
-                </ul>
-                <p className="mt-2 text-xs text-slate-600">
-                  Un contrato API es el acuerdo entre cliente y servidor sobre rutas, campos y formatos de respuesta. Versionar
-                  endpoints (por ejemplo, <code>/v1</code>, <code>/v2</code>) permite evolucionar la API sin romper clientes antiguos.
-                  Además, nombres descriptivos de recursos facilitan entender qué hace cada ruta.
-                </p>
+                <div className="space-y-3">
+                  <div className="rounded-2xl border border-purple-200 bg-white p-4 shadow-lg shadow-purple-100/50">
+                    <div className="flex items-center gap-2">
+                      <MessageSquare className="h-5 w-5 text-purple-600" />
+                      <h4 className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-sm font-semibold text-transparent">
+                        El Idioma de la Aplicación
+                      </h4>
+                    </div>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                      Para que dos computadoras se entiendan en la Capa 7, deben seguir un acuerdo. Si una pide una foto, la otra debe saber entregar una foto y no un video. A este acuerdo lo llamamos el lenguaje de la aplicación.
+                    </p>
+                    <p className="mt-2 text-sm text-slate-700">
+                      Sin un <span className="font-bold text-purple-600">Lenguaje común</span>, se pierde el <span className="font-bold text-purple-600">Significado de los datos</span>.
+                    </p>
+                  </div>
+
+                  <div className="rounded-2xl border border-purple-200 bg-white p-4 shadow-lg shadow-purple-100/50">
+                    <div className="flex items-center gap-2">
+                      <Key className="h-5 w-5 text-purple-600" />
+                      <h4 className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-sm font-semibold text-transparent">
+                        Seguridad para Humanos
+                      </h4>
+                    </div>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                      Aquí es donde se decide la privacidad. La Capa 7 es la encargada de revisar que tú seas quien dices ser antes de mostrarte tus mensajes privados.
+                    </p>
+                    <p className="mt-2 text-sm text-slate-700">
+                      En esta capa se protege tu <span className="font-bold text-purple-600">Privacidad</span> con reglas comprensibles para la aplicación.
+                    </p>
+                  </div>
+                </div>
               </>
             }
           />
@@ -166,20 +250,31 @@ export default function Layer7DeepDive() {
 
         <Reveal delay={0.12}>
           <CardBlock
+            step={3}
+            icon={<MessageSquareText className="h-6 w-6" />}
             title="Significado (status + headers + payload)"
-            idea="El servidor siempre responde y esa respuesta tiene significado: status, headers y payload cuentan la historia completa. Un 200 indica éxito técnico de la transacción HTTP, pero no garantiza éxito del negocio. Para entender realmente qué pasó, hay que leer también el contenido de la respuesta."
+            idea={<><span className="font-semibold text-purple-600">200 OK</span> es semáforo en verde; <span className="font-semibold text-purple-600">404</span> es una calle sin salida; y <span className="font-semibold text-purple-600">500</span> es que el puente se cayó.</>}
+            badges={[
+              { label: '200 OK', className: 'rounded-full border border-purple-200 bg-purple-50 px-2 py-0.5 text-xs font-semibold text-purple-600' },
+              { label: '404', className: 'rounded-full border border-purple-200 bg-purple-50 px-2 py-0.5 text-xs font-semibold text-purple-600' },
+              { label: '500', className: 'rounded-full border border-purple-200 bg-purple-50 px-2 py-0.5 text-xs font-semibold text-purple-600' }
+            ]}
             bullets={[
-              'El status importa porque guía el diagnóstico inicial (cliente, permisos, servidor o éxito).',
-              'Accept y Content-Type importan porque deben coincidir para interpretar correctamente el formato de datos.',
-              'ETag e If-None-Match importan para caché: un 304 evita descargar de nuevo contenido sin cambios.'
+              'Status: te confirma si la solicitud fue aceptada o falló.',
+              'Headers: explican formato, caché y reglas de interpretación.',
+              'Un Status 200 es como un semáforo en verde; el 404 es una calle sin salida; y el 500 es que el puente se cayó.'
             ]}
             example={`HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: max-age=60\n\n{ "items": ["post1", "post2"], "next": "/v1/feed?cursor=def" }`}
-            devtools={['Status', 'Response Headers', 'Response/Preview', 'Time']}
+            devtools={[
+              { label: 'Status', description: '¿Me hicieron caso?' },
+              { label: 'Headers', description: 'La letra chiquita del mensaje.' },
+              { label: 'Payload', description: '¿Qué datos envié o recibí?' }
+            ]}
             extra={
               <>
                 <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Cheat-sheet de status</p>
                 <ul className="mt-2 space-y-1 text-sm text-slate-700">
-                  <li><span className="font-medium">2xx:</span> la solicitud fue aceptada correctamente (ejemplo: 200/204).</li>
+                  <li><span className="font-medium">2xx:</span> la solicitud fue aceptada correctamente (ejemplo: <span className="rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-700">200</span> / 204).</li>
                   <li><span className="font-medium">3xx:</span> redirección o caché; <span className="font-medium">304</span> significa “sin cambios”, no error.</li>
                   <li><span className="font-medium">4xx:</span> el problema está en la solicitud del cliente o sus permisos.</li>
                   <li><span className="font-medium">401:</span> falta autenticación válida (token ausente, vencido o incorrecto).</li>
@@ -195,6 +290,8 @@ export default function Layer7DeepDive() {
           />
         </Reveal>
       </div>
+
+      <Layer7ConceptBlocks />
 
       <Reveal delay={0.1}>
         <motion.div

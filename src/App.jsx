@@ -19,8 +19,8 @@ export default function App() {
       <Navbar />
       <main className="relative z-10 mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
         <Hero />
-        <BridgeConcept />
         <OsiOverview />
+        <BridgeConcept />
         <Layer7DeepDive />
         <StatusCodesSection />
         <HeadersPayloadSection />
