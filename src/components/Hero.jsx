@@ -2,9 +2,9 @@ import { Reveal } from './Reveal'
 
 const chips = ['HTTP', 'HTTPS', 'DNS', 'APIs', 'Auth', 'Status Codes']
 const learnCards = [
-  { t: 'UI → HTTP', d: 'Cada click en la app se traduce en una solicitud con método, ruta y headers.' },
-  { t: 'Diagnóstico real', d: 'Method, Status, Headers, Body y Timing son señales de capa 7.' },
-  { t: 'Transporte vs semántica', d: 'Puedes tener ping y puertos OK, pero fallar por auth, rutas o lógica.' }
+  { t: 'Request y Response', d: 'Verás que una app "conversa" con un servidor: primero solicita (request) y luego recibe respuesta (response).' },
+  { t: 'Método, URL y Status', d: 'Aprenderás qué significa cada parte básica de una solicitud y por qué el status cambia.' },
+  { t: 'DevTools básico', d: 'Usaremos Network para leer lo esencial: Method, URL, Status, Headers y Response.' }
 ]
 
 export default function Hero() {
@@ -19,8 +19,8 @@ export default function Hero() {
             <br className="hidden lg:block" /> Ve solicitudes y respuestas.
           </h1>
           <p className="mt-6 max-w-4xl text-base leading-relaxed text-slate-600 sm:text-lg">
-            En Capa 7 la red entiende intención, recurso y significado: método, ruta, status, headers y payload.
-            Aquí lo verás con ejemplos técnicos y validación directa en DevTools → Network.
+            HTTP es el idioma principal de la Capa 7: permite pedir recursos y recibir respuestas con significado.
+            En esta guía veremos ejemplos simples y cómo leerlos paso a paso en DevTools → Network.
           </p>
           <div className="mt-6 flex flex-wrap gap-2">
             {chips.map((c) => <button key={c} className="chip-chip">{c}</button>)}

@@ -3,26 +3,11 @@ import { Copy } from 'lucide-react'
 import { Reveal } from './Reveal'
 
 const simulations = {
-  '200': {
-    meaning: 'Respuesta exitosa. Valida estructura y semántica del payload.',
-    check: 'Body esperado, Content-Type correcto, latencia normal.'
-  },
-  '401': {
-    meaning: 'Autenticación inválida o ausente.',
-    check: 'Authorization header, expiración de token, WWW-Authenticate.'
-  },
-  '403': {
-    meaning: 'Sin permisos suficientes.',
-    check: 'Roles/scopes y políticas de autorización.'
-  },
-  '404': {
-    meaning: 'Ruta o recurso inexistente.',
-    check: 'Path, versión de API, params y mapeo de rutas.'
-  },
-  '500': {
-    meaning: 'Error interno del servidor.',
-    check: 'Logs correlacionados, tracing, dependencias internas.'
-  }
+  '200': { meaning: 'Respuesta de ejemplo exitosa.', check: 'Observa cómo se ven Method, URL, Status y Response.' },
+  '401': { meaning: 'Falta autenticación válida.', check: 'Observa que la respuesta ya no representa éxito.' },
+  '403': { meaning: 'Sin permisos suficientes.', check: 'Compara con 401 para entender la diferencia.' },
+  '404': { meaning: 'Ruta o recurso no encontrado.', check: 'Relaciona URL incorrecta con resultado.' },
+  '500': { meaning: 'Error interno del servidor.', check: 'Aprende a reconocer respuestas de fallo de servicio.' }
 }
 
 export default function DemoSection() {
@@ -32,7 +17,6 @@ export default function DemoSection() {
   const [result, setResult] = useState(null)
 
   const requestPreview = useMemo(() => `GET /demo.json?v=${counter + 1}\nAccept: application/json\nCache-Control: no-store`, [counter])
-
   const responsePreview = useMemo(() => (result ? JSON.stringify(result.body, null, 2) : ''), [result])
 
   const copyText = async (text) => {
@@ -64,13 +48,7 @@ export default function DemoSection() {
     try {
       const res = await fetch(url, { cache: 'no-store' })
       const body = await res.json()
-      setResult({
-        method: 'GET',
-        url: res.url,
-        status: res.status,
-        contentType: res.headers.get('content-type') || 'N/A',
-        body
-      })
+      setResult({ method: 'GET', url: res.url, status: res.status, contentType: res.headers.get('content-type') || 'N/A', body })
     } catch {
       setResult({ method: 'GET', url, status: 'NETWORK_ERROR', contentType: 'N/A', body: { error: 'No disponible' } })
     } finally {
@@ -80,11 +58,14 @@ export default function DemoSection() {
 
   return (
     <section id="demo" className="scroll-mt-28 py-24">
-      <Reveal><h2 className="text-4xl font-semibold text-[#0B1220] sm:text-5xl">Demo interactiva</h2></Reveal>
+      <Reveal>
+        <h2 className="text-4xl font-semibold text-[#0B1220] sm:text-5xl">Demo interactiva</h2>
+        <p className="mt-3 max-w-4xl text-slate-600">Actividad de aprendizaje: elige un escenario y observa qué cambia en Network.</p>
+      </Reveal>
       <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_1.2fr]">
         <Reveal>
           <article className="card p-7">
-            <label htmlFor="status-select" className="text-sm font-medium text-slate-700">Selector de status</label>
+            <label htmlFor="status-select" className="text-sm font-medium text-slate-700">Escenario de status</label>
             <select id="status-select" value={mode} onChange={(e) => setMode(e.target.value)} className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm">
               <option value="200">200 (real con /demo.json)</option>
               <option value="401">401 (simulado)</option>
@@ -94,8 +75,13 @@ export default function DemoSection() {
             </select>
             <button onClick={run} disabled={loading} className="btn-primary mt-4 w-full justify-center" aria-label="Generar tráfico de Capa 7">{loading ? 'Generando...' : 'Generar tráfico de Capa 7'}</button>
             <div className="mt-5 rounded-2xl border border-indigo-200 bg-indigo-50/70 p-4 text-sm text-indigo-900">
-              {simulations[mode].meaning} Qué revisar: {simulations[mode].check}
+              {simulations[mode].meaning} {simulations[mode].check}
             </div>
+            <ol className="mt-4 list-decimal space-y-1 pl-5 text-sm text-slate-600">
+              <li>Ejecuta la prueba.</li>
+              <li>Abre la request en Network.</li>
+              <li>Compara Method, URL, Status y Response.</li>
+            </ol>
           </article>
         </Reveal>
         <Reveal delay={0.08}>
@@ -117,7 +103,7 @@ export default function DemoSection() {
                   </div>
                 </div>
               </div>
-            ) : <p className="text-sm text-slate-600">Selecciona escenario y genera tráfico para inspección en Network.</p>}
+            ) : <p className="text-sm text-slate-600">Elige un escenario y genera una request para verla en detalle.</p>}
           </article>
         </Reveal>
       </div>

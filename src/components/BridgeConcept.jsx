@@ -9,8 +9,7 @@ export default function BridgeConcept() {
           Las capas 1 a 6 transportan. <span className="text-indigo-600">La capa 7 da significado.</span>
         </h2>
         <p className="mt-4 max-w-4xl text-base leading-relaxed text-slate-700 sm:text-lg">
-          Conectividad no implica servicio funcional; puedes tener ping/puertos OK, y aun asi fallar por autenticacion,
-          permisos, rutas o logica. HTTP expresa la solicitud y la aplicacion interpreta su significado.
+          Las capas bajas se enfocan en mover datos de un punto a otro. En Capa 7, HTTP expresa qué se pidió y la aplicación interpreta si puede responder.
         </p>
       </Reveal>
 
@@ -19,35 +18,26 @@ export default function BridgeConcept() {
           <article className="card p-7 transition hover:ring-1 hover:ring-indigo-300">
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-600">Entrega (capas 1-6)</p>
             <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-700">
-              <li>Paquetes, puertos, routing, latencia y perdida.</li>
-              <li>Handshake TCP y salud de conectividad entre extremos.</li>
-              <li>Retransmisiones y timeout como senales de transporte.</li>
-              <li>Resolucion de nombre lenta puede impactar inicio de request.</li>
+              <li>Mueve datos por cable, Wi-Fi, IP y puertos.</li>
+              <li>Su objetivo es que el paquete llegue al destino.</li>
+              <li>Puede haber conexión aunque no haya respuesta útil.</li>
             </ul>
             <p className="mt-4 rounded-xl bg-slate-50 px-3 py-2 text-sm text-slate-700">
-              TCP conecta, IP enruta, pero no garantiza \"acceso\" al recurso.
+              Analogía: es como llevar un sobre a una dirección.
             </p>
-            <div className="mt-4 rounded-xl border border-slate-200 bg-white/70 px-3 py-2 text-xs text-slate-600">
-              <span className="font-semibold text-slate-700">Que ver en DevTools:</span> Timing (TTFB), Stalled,
-              DNS, Connect, SSL.
-            </div>
           </article>
         </Reveal>
         <Reveal delay={0.07}>
           <article className="card p-7 transition hover:ring-1 hover:ring-indigo-300">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-indigo-600">Semantica (capa 7)</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-indigo-600">Semántica (capa 7)</p>
             <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-700">
-              <li>Metodo + ruta + headers + payload.</li>
-              <li>Status codes guian diagnostico: 401/403/404/429/5xx.</li>
-              <li>Accept y Content-Type definen negociacion de contenido.</li>
-              <li>CORS, cookies y token afectan acceso real al recurso.</li>
+              <li>Define método, ruta, headers y contenido del mensaje.</li>
+              <li>La respuesta trae status y datos con significado.</li>
+              <li>Aquí sabemos si la solicitud fue comprendida.</li>
             </ul>
             <p className="mt-4 rounded-xl bg-indigo-50 px-3 py-2 text-sm text-indigo-900">
-              401 = token ausente/expirado, 404 = ruta o version incorrecta.
+              Analogía: no solo llega el sobre, también se entiende el mensaje.
             </p>
-            <div className="mt-4 rounded-xl border border-indigo-200 bg-white/70 px-3 py-2 text-xs text-slate-600">
-              <span className="font-semibold text-slate-700">Que ver en DevTools:</span> Status, Headers, Response.
-            </div>
           </article>
         </Reveal>
       </div>
@@ -58,7 +48,7 @@ export default function BridgeConcept() {
           <div className="mt-3 grid gap-3 md:grid-cols-3">
             <div className="rounded-xl border border-slate-200 bg-slate-50 p-3">
               <p className="text-xs uppercase tracking-wide text-slate-500">UI Action</p>
-              <p className="mt-1 text-sm text-slate-700">Tap en \"refresh feed\"</p>
+              <p className="mt-1 text-sm text-slate-700">Tap en “refresh feed”</p>
             </div>
             <div className="rounded-xl border border-slate-200 bg-slate-50 p-3">
               <p className="text-xs uppercase tracking-wide text-slate-500">HTTP Request</p>
@@ -66,12 +56,7 @@ export default function BridgeConcept() {
             </div>
             <div className="rounded-xl border border-indigo-200 bg-indigo-50 p-3">
               <p className="text-xs uppercase tracking-wide text-indigo-600">HTTP Response</p>
-              <p className="mt-1 text-sm text-slate-800">
-                <span className="rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-700">
-                  200 OK
-                </span>{' '}
-                JSON
-              </p>
+              <p className="mt-1 text-sm text-slate-800"><span className="rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-700">200 OK</span> JSON</p>
             </div>
           </div>
         </article>
@@ -79,7 +64,7 @@ export default function BridgeConcept() {
 
       <Reveal delay={0.1}>
         <div className="mt-6 rounded-2xl border border-indigo-200 bg-indigo-50/80 p-4 text-sm text-indigo-900">
-          Ping funciona ≠ app funciona. Si ves 401/403/404/500, el diagnostico empieza en Capa 7.
+          Que haya conexión no significa que el servicio ya “entienda” tu solicitud.
         </div>
       </Reveal>
     </section>
