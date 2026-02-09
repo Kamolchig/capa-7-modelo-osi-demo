@@ -106,7 +106,7 @@ export default function DemoSection() {
         </article>
       </Reveal>
 
-      <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_1.2fr]">
+      <div className="mt-8 grid gap-6 px-2 md:px-6 lg:grid-cols-[1fr_1.2fr]">
         <Reveal>
           <article className="card p-7">
             <label htmlFor="status-select" className="text-sm font-medium text-slate-700">Escenario de status</label>
@@ -117,7 +117,7 @@ export default function DemoSection() {
               <option value="404">404 (simulado)</option>
               <option value="500">500 (simulado)</option>
             </select>
-            <button onClick={run} disabled={loading} className="btn-primary mt-4 w-full justify-center" aria-label="Generar tráfico de Capa 7">{loading ? 'Generando...' : 'Generar tráfico de Capa 7'}</button>
+            <button onClick={run} disabled={loading} className="btn-primary mt-4 w-full justify-center md:w-auto" aria-label="Generar tráfico de Capa 7">{loading ? 'Generando...' : 'Generar tráfico de Capa 7'}</button>
             <div className="mt-5 rounded-2xl border border-indigo-200 bg-indigo-50/70 p-4 text-sm text-indigo-900">
               {simulations[mode].meaning} {simulations[mode].check}
             </div>
@@ -136,14 +136,14 @@ export default function DemoSection() {
                 <div className="result-item"><span>Status</span><strong>{result.status}</strong></div>
                 <div className="result-item sm:col-span-2 break-all"><span>URL</span><strong>{result.url}</strong></div>
                 <div className="result-item sm:col-span-2 break-all"><span>Content-Type</span><strong>{result.contentType}</strong></div>
-                <div className="sm:col-span-2 grid gap-3 md:grid-cols-2">
+                <div className="sm:col-span-2 flex flex-col gap-4 lg:flex-row">
                   <div>
                     <div className="mb-2 flex items-center justify-between"><span className="text-xs uppercase text-slate-500">Request</span><button className="text-xs text-indigo-600" onClick={() => copyText(requestPreview)}><Copy className="mr-1 inline h-3.5 w-3.5" />Copiar</button></div>
-                    <pre className="code-block">{requestPreview}</pre>
+                    <pre className="code-block w-full overflow-x-auto whitespace-pre-wrap break-words">{requestPreview}</pre>
                   </div>
                   <div>
                     <div className="mb-2 flex items-center justify-between"><span className="text-xs uppercase text-slate-500">Response</span><button className="text-xs text-indigo-600" onClick={() => copyText(responsePreview)}><Copy className="mr-1 inline h-3.5 w-3.5" />Copiar</button></div>
-                    <pre className="code-block">{responsePreview}</pre>
+                    <pre className="code-block w-full overflow-x-auto whitespace-pre-wrap break-words">{responsePreview}</pre>
                   </div>
                 </div>
               </div>
