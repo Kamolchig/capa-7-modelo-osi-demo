@@ -326,76 +326,27 @@ export default function Layer7DeepDive() {
         </Reveal>
       </div>
 
-      <div className="mt-6 grid gap-5 lg:grid-cols-2">
-        <Reveal delay={0.14}>
-          <article className="card p-6 transition hover:ring-1 hover:ring-indigo-300">
-            <div className="flex items-start gap-3">
-              <div className="rounded-2xl border border-indigo-200 bg-indigo-50 p-2.5 text-indigo-700">
-                <MessageSquare className="h-6 w-6" />
-              </div>
-              <div>
-                <h3 className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-2xl font-semibold text-transparent">
-                  El Mensaje Oculto (Headers)
-                </h3>
-              </div>
-            </div>
-            <p className="mt-4 text-sm leading-relaxed tracking-[0.01em] text-slate-700">
-              Los headers son metadatos de la conversación HTTP. No son el “dato principal”, pero definen cómo debe
-              interpretarse el mensaje y qué contexto tiene la solicitud.
-            </p>
-            <ul className="mt-3 space-y-1 text-sm text-slate-700">
-              <li><span className="font-semibold">User-Agent:</span> informa qué navegador/cliente hace la petición.</li>
-              <li><span className="font-semibold">Content-Type:</span> indica si el cuerpo es texto, imagen, JSON u otro formato.</li>
-              <li><span className="font-semibold">Authorization:</span> aporta identidad/credenciales para acceso protegido.</li>
-            </ul>
-          </article>
-        </Reveal>
-
-        <Reveal delay={0.18}>
-          <article className="card p-6 transition hover:ring-1 hover:ring-indigo-300">
-            <div className="flex items-start gap-3">
-              <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-2.5 text-emerald-700">
-                <Key className="h-6 w-6" />
-              </div>
-              <div>
-                <h3 className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-2xl font-semibold text-transparent">
-                  Seguridad (HTTPS y TLS)
-                </h3>
-              </div>
-            </div>
-            <p className="mt-4 text-sm leading-relaxed tracking-[0.01em] text-slate-700">
-              HTTPS = HTTP + TLS. Antes de intercambiar payload real, ocurre el <span className="font-semibold">handshake</span>:
-              cliente y servidor negocian parámetros criptográficos e intercambian claves para establecer un canal cifrado.
-            </p>
-            <p className="mt-3 text-sm leading-relaxed tracking-[0.01em] text-slate-700">
-              Ese túnel evita que terceros lean o alteren el contenido en tránsito, mitigando ataques de tipo
-              <span className="font-semibold"> Man-in-the-Middle</span>.
-            </p>
-          </article>
-        </Reveal>
-      </div>
-
       <Reveal delay={0.2}>
         <section className="mt-8 space-y-4" aria-label="Profundización avanzada de Capa 7">
           <DeepDisclosure title="Los Headers (Metadatos: El Contexto Oculto)" icon={<List className="h-4 w-4" />} defaultOpen>
             <p>
-              Los headers son etiquetas que no ve el usuario, pero que le dicen al servidor cómo procesar el mensaje.
+              Los <code>headers</code> son pares <code>llave-valor</code> que definen reglas y contexto antes de procesar el cuerpo del mensaje.
             </p>
             <div className="mt-3 grid gap-3 md:grid-cols-2">
               <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
                 <p className="font-semibold text-slate-900">Request Headers</p>
                 <ul className="mt-2 space-y-1">
-                  <li><span className="font-semibold">Authorization:</span> tu pase de entrada (token/credencial).</li>
-                  <li><span className="font-semibold">User-Agent:</span> quién eres: iPhone, Chrome, app móvil, etc.</li>
-                  <li><span className="font-semibold">Accept:</span> qué idioma de datos entiendes (JSON, HTML, etc.).</li>
+                  <li><span className="font-semibold"><code>User-Agent</code>:</span> identifica dispositivo/cliente (iPhone, Chrome, app móvil).</li>
+                  <li><span className="font-semibold"><code>Accept-Language</code>:</span> idioma preferido para la respuesta (ej. <code>es-MX</code>).</li>
+                  <li><span className="font-semibold"><code>Authorization</code>:</span> aquí suele viajar el token JWT para autenticación.</li>
                 </ul>
               </div>
               <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
                 <p className="font-semibold text-slate-900">Response Headers</p>
                 <ul className="mt-2 space-y-1">
-                  <li><span className="font-semibold">Content-Type:</span> tipo de respuesta (ej: <code>application/json</code>).</li>
-                  <li><span className="font-semibold">Cache-Control:</span> cuánto tiempo guardar copia local.</li>
-                  <li><span className="font-semibold">Set-Cookie:</span> cómo el servidor te recuerda en próximas peticiones.</li>
+                  <li><span className="font-semibold"><code>Content-Type</code>:</span> formato del dato (ej. <code>application/json</code>).</li>
+                  <li><span className="font-semibold"><code>Cache-Control</code>:</span> instrucciones de caché para el navegador.</li>
+                  <li><span className="font-semibold"><code>Server</code>:</span> software/plataforma que responde la petición.</li>
                 </ul>
               </div>
             </div>
@@ -403,31 +354,31 @@ export default function Layer7DeepDive() {
 
           <DeepDisclosure title="El Payload (El Cuerpo: El Mensaje Real)" icon={<FileJson className="h-4 w-4" />}>
             <p>
-              Es la carga útil. Lo que realmente queremos enviar o recibir una vez que los headers abrieron la puerta.
+              Es la carga útil: lo que realmente enviamos o recibimos una vez definidos los metadatos de transporte semántico.
             </p>
             <div className="mt-3 grid gap-3 md:grid-cols-2">
               <div>
                 <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">Request Payload</p>
-                <pre className="rounded-xl bg-slate-950 p-3 text-xs text-cyan-200">{`{\n  "comentario": "¡Excelente expo!",\n  "id_post": 77\n}`}</pre>
+                <pre className="rounded-xl bg-slate-950 p-3 text-xs text-cyan-200">{`{\n  "texto": "Hola",\n  "img": "url"\n}`}</pre>
               </div>
               <div>
                 <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">Response Payload</p>
-                <pre className="rounded-xl bg-slate-950 p-3 text-xs text-cyan-200">{`{\n  "status": "success",\n  "timestamp": "2026-02-09T13:30Z"\n}`}</pre>
+                <pre className="rounded-xl bg-slate-950 p-3 text-xs text-cyan-200">{`{\n  "status": "ok",\n  "post_id": 901,\n  "meta": {\n    "procesado_en_ms": 23\n  }\n}`}</pre>
               </div>
             </div>
             <p className="mt-3">
-              El payload puede ser texto, imágenes o archivos, pero en la web moderna, JSON es el rey por ser ligero.
+              JSON reemplazó en gran parte a XML en APIs web por ser más ligero, menos verboso y nativo en JavaScript.
             </p>
           </DeepDisclosure>
 
           <DeepDisclosure title="Seguridad Avanzada (HTTPS y TLS)" icon={<Shield className="h-4 w-4" />}>
             <p>
-              En Capa 7, la seguridad no es opcional. HTTPS es el guardaespaldas de tus datos.
+              En Capa 7, HTTPS protege la conversación aplicando TLS antes de transmitir HTTP real.
             </p>
             <ul className="mt-2 space-y-1">
-              <li><span className="font-semibold">Cifrado:</span> los datos viajan como ruido ilegible si alguien los intercepta.</li>
-              <li><span className="font-semibold">Integridad:</span> detecta cambios en el camino (mitiga Man-in-the-Middle).</li>
-              <li><span className="font-semibold">Autenticación:</span> el certificado digital confirma que el servidor es legítimo.</li>
+              <li><span className="font-semibold">Handshake TLS:</span> negociación inicial de llaves y algoritmos antes de enviar datos de aplicación.</li>
+              <li><span className="font-semibold">Certificados SSL/TLS:</span> el servidor demuestra su identidad con firma digital válida.</li>
+              <li><span className="font-semibold">Asimétrico + Simétrico:</span> se usa criptografía de llave pública para iniciar y sesión simétrica para rendimiento.</li>
             </ul>
             <div className="mt-3 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-emerald-800">
               🔒 Conexión Segura
@@ -436,8 +387,14 @@ export default function Layer7DeepDive() {
 
           <DeepDisclosure title="El Portero del Navegador (CORS)" icon={<Shield className="h-4 w-4" />}>
             <p>
-              Cross-Origin Resource Sharing es una regla de seguridad de Capa 7 que impide que un sitio malicioso pida
-              tus datos privados de otro sitio sin permiso explícito del servidor.
+              Problema: un sitio A no debe leer datos privados de sitio B automáticamente.
+            </p>
+            <p>
+              Solución: el servidor devuelve <code>Access-Control-Allow-Origin</code> para autorizar explícitamente qué orígenes pueden leer la respuesta.
+            </p>
+            <p>
+              Preflight: en operaciones sensibles, el navegador envía primero una petición <code>OPTIONS</code> “invisible”
+              para validar permisos antes de la solicitud real.
             </p>
           </DeepDisclosure>
         </section>
