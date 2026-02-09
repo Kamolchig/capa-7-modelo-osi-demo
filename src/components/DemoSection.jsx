@@ -59,7 +59,7 @@ export default function DemoSection() {
   return (
     <section id="demo" className="scroll-mt-28 py-24">
       <Reveal>
-        <h2 className="text-4xl font-semibold text-[#0B1220] sm:text-5xl">Demo interactiva</h2>
+        <h2 className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-4xl font-semibold text-transparent sm:text-5xl">Demo interactiva</h2>
         <p className="mt-3 max-w-4xl text-slate-600">Actividad de aprendizaje: elige un escenario y observa qué cambia en Network.</p>
       </Reveal>
       <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_1.2fr]">
