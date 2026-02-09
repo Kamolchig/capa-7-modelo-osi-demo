@@ -1,4 +1,5 @@
 import { Reveal } from './Reveal'
+import { Code2, Wind, Cpu, Globe } from 'lucide-react'
 
 export default function FooterSection() {
   const go = (id) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -76,11 +77,54 @@ export default function FooterSection() {
 
       <Reveal delay={0.08}>
         <div className="card mt-6 p-6">
-          <h4 className="text-lg font-semibold text-slate-900">Cómo se hizo esta página</h4>
-          <p className="mt-2 text-sm text-slate-600">
-            Esta landing fue desarrollada con <strong>React + Vite</strong> para una carga rápida, <strong>Tailwind CSS</strong> para el diseño visual, y <strong>Framer Motion</strong> para animaciones suaves.
-            También incluye un fondo de partículas en <strong>Canvas</strong> y una demo interactiva con <strong>fetch</strong> para visualizar tráfico real en DevTools.
-          </p>
+          <h4 className="text-lg font-semibold text-slate-900">Detrás de escena: ¿Cómo creamos esta guía?</h4>
+          <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+            <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
+              <div className="mb-2 inline-flex rounded-xl border border-indigo-200 bg-indigo-50 p-2.5 text-indigo-700">
+                <Code2 size={20} />
+              </div>
+              <p className="font-semibold text-slate-800">Estructura: React + Vite</p>
+              <p className="mt-1">
+                Usamos React para que la página sea rápida y responda al instante cuando haces clic en la demo, sin recargas molestas.
+              </p>
+            </div>
+            <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
+              <div className="mb-2 inline-flex rounded-xl border border-indigo-200 bg-indigo-50 p-2.5 text-indigo-700">
+                <Wind size={20} />
+              </div>
+              <p className="font-semibold text-slate-800">Estilo: Tailwind CSS</p>
+              <p className="mt-1">
+                Es lo que nos permite que todo se vea bonito y se adapte perfectamente a tu celular o computadora.
+              </p>
+            </div>
+            <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
+              <div className="mb-2 inline-flex rounded-xl border border-indigo-200 bg-indigo-50 p-2.5 text-indigo-700">
+                <Cpu size={20} />
+              </div>
+              <p className="font-semibold text-slate-800">Animaciones: Framer Motion</p>
+              <p className="mt-1">
+                Para que las capas OSI y los textos aparezcan con suavidad, haciendo que la lectura sea más entretenida.
+              </p>
+            </div>
+            <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
+              <div className="mb-2 inline-flex rounded-xl border border-indigo-200 bg-indigo-50 p-2.5 text-indigo-700">
+                <Cpu size={20} />
+              </div>
+              <p className="font-semibold text-slate-800">Datos reales: Fetch API</p>
+              <p className="mt-1">
+                Usamos la tecnología estándar del navegador para conectarnos a un servidor real y mostrarte cómo viaja la información.
+              </p>
+            </div>
+            <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600 md:col-span-2 xl:col-span-1">
+              <div className="mb-2 inline-flex rounded-xl border border-indigo-200 bg-indigo-50 p-2.5 text-indigo-700">
+                <Globe size={20} />
+              </div>
+              <p className="font-semibold text-slate-800">Hosting: Vercel</p>
+              <p className="mt-1">
+                Donde vive nuestra página para que sea accesible desde cualquier parte del mundo con solo un link.
+              </p>
+            </div>
+          </div>
         </div>
       </Reveal>
 
