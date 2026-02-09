@@ -5,7 +5,7 @@ export default function QuickAccessQR() {
   const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${qrValue}`
 
   return (
-    <section className="flex flex-col items-center justify-center py-8 bg-gradient-to-b from-transparent to-slate-50/50">
+    <section className="flex flex-col items-center justify-center py-8">
       <Reveal>
         <div className="mx-auto w-full max-w-xs px-4 text-center">
           <span className="inline-flex rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-700">
