@@ -76,11 +76,6 @@ export default function BridgeConcept() {
         </article>
       </Reveal>
 
-      <Reveal delay={0.1}>
-        <div className="mt-6 rounded-2xl border border-indigo-200 bg-indigo-50/80 p-4 text-sm text-indigo-900">
-          Que haya conexión no significa que el servicio ya “entienda” tu solicitud.
-        </div>
-      </Reveal>
     </section>
   )
 }

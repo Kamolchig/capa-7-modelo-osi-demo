@@ -188,7 +188,12 @@ export default function Layer7DeepDive() {
             step={1}
             icon={<FileText className="h-6 w-6" />}
             title="Intención (método HTTP)"
-            idea={<><span className="font-semibold text-purple-600">GET</span>, <span className="font-semibold text-purple-600">POST</span>, <span className="font-semibold text-purple-600">PUT</span> y <span className="font-semibold text-purple-600">PATCH</span> definen la intención real de la operación sobre el recurso.</>}
+            idea={
+              <>
+                <span className="font-semibold text-purple-600">HTTP</span> es el idioma que usa tu app para comunicarse con un servidor: el cliente envía una solicitud y el servidor responde.
+                El método HTTP (por ejemplo <span className="font-semibold text-purple-600">GET</span> o <span className="font-semibold text-purple-600">POST</span>) le dice al servidor qué quieres hacer exactamente.
+              </>
+            }
             badges={[
               { label: 'GET', className: 'rounded-full border border-purple-200 bg-purple-50 px-2 py-0.5 text-xs font-semibold text-purple-600' },
               { label: 'POST', className: 'rounded-full border border-purple-200 bg-purple-50 px-2 py-0.5 text-xs font-semibold text-purple-600' },
@@ -196,11 +201,12 @@ export default function Layer7DeepDive() {
               { label: 'PATCH', className: 'rounded-full border border-purple-200 bg-purple-50 px-2 py-0.5 text-xs font-semibold text-purple-600' }
             ]}
             bullets={[
-              'Idempotencia: GET y PUT son idempotentes (puedes repetirlos sin causar efectos secundarios extra), mientras que POST no lo es (cada click puede crear un duplicado).',
-              'PATCH actualiza solo un pedacito del recurso; PUT reemplaza el recurso completo.',
-              'En diseño de APIs, elegir bien el método evita errores de negocio y efectos no deseados.'
+              'GET = leer datos. Ejemplo real: abrir el feed o cargar tu perfil.',
+              'POST = crear o enviar algo nuevo. Ejemplo real: publicar un comentario o enviar un mensaje.',
+              'PUT / PATCH = actualizar. PUT reemplaza todo el recurso; PATCH solo una parte (por ejemplo, cambiar solo la bio).',
+              'DELETE = eliminar. Ejemplo real: borrar una publicación o quitar un comentario.'
             ]}
-            example={`GET /v1/feed\nPUT /v1/users/42\nPATCH /v1/users/42 { "bio": "Actualizada" }\nPOST /v1/messages { "text": "Hola" }`}
+            example={`GET /v1/feed            # Cargar inicio\nPOST /v1/messages       # Enviar mensaje\nPUT /v1/users/42        # Reemplazar perfil\nPATCH /v1/users/42      # Editar solo la bio`}
             devtools={[
               { label: 'Method', description: '¿Qué acción pedí?' },
               { label: 'Payload', description: '¿Qué datos envié?' },
@@ -225,7 +231,9 @@ export default function Layer7DeepDive() {
                     </tbody>
                   </table>
                 </div>
-                <p className="mt-2 text-xs text-slate-600">Nota: la idempotencia final depende de cómo implemente la API cada operación.</p>
+                <p className="mt-2 text-xs text-slate-600">
+                  Nota técnica: GET y PUT suelen ser idempotentes (repetirlos no debería cambiar el resultado final), mientras POST normalmente no lo es.
+                </p>
               </>
             }
           />
