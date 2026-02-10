@@ -36,13 +36,24 @@ export default function Layer7ConceptBlocks() {
           <div className="mt-5 rounded-2xl border border-slate-200 bg-slate-50 p-4">
             <h4 className="text-lg font-semibold text-slate-900">Metadatos con significado (Headers)</h4>
             <p className="mt-2 text-sm text-slate-700">“Los headers son contexto semántico, no transporte.”</p>
-            <ul className="mt-3 space-y-1 text-sm text-slate-700">
-              <li>“Authorization → quién eres”</li>
-              <li>“Accept → cómo entiendes los datos”</li>
-              <li>“Content-Type → cómo deben interpretarse”</li>
-              <li>“Cache-Control → cuánto tiempo son válidos”</li>
+            <ul className="mt-3 space-y-2 text-sm text-slate-700">
+              <li>
+                <span className="font-semibold">“Authorization → quién eres”</span>: envía una credencial (por ejemplo, un token) para que el servidor identifique tu sesión y decida si puedes acceder al recurso.
+              </li>
+              <li>
+                <span className="font-semibold">“Accept → cómo entiendes los datos”</span>: le dice al servidor en qué formato prefieres recibir la respuesta (por ejemplo, JSON). Es una negociación de formato de salida.
+              </li>
+              <li>
+                <span className="font-semibold">“Content-Type → cómo deben interpretarse”</span>: indica el formato del cuerpo que viaja (por ejemplo, <code>application/json</code>) para que el receptor lo interprete correctamente.
+              </li>
+              <li>
+                <span className="font-semibold">“Cache-Control → cuánto tiempo son válidos”</span>: define reglas de caché para saber si el navegador debe reutilizar una copia o pedir datos nuevos al servidor.
+              </li>
             </ul>
-            <p className="mt-3 text-sm font-semibold text-indigo-700">“Esto es 100% Capa 7.”</p>
+            <p className="mt-3 text-sm text-slate-700">
+              En conjunto, estos headers no mueven cables ni paquetes: describen <span className="font-semibold">significado, permisos y formato</span> de la conversación entre cliente y servidor.
+            </p>
+            <p className="mt-2 text-sm font-semibold text-indigo-700">“Esto es 100% Capa 7.”</p>
           </div>
 
           <div className="mt-5 rounded-2xl border border-indigo-200 bg-indigo-50/70 p-4">

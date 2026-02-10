@@ -1,6 +1,6 @@
 import { Reveal } from './Reveal'
 import { Activity, FileText, MousePointer2, Terminal } from 'lucide-react'
-import { Eye, Monitor, Wifi, Zap } from 'lucide-react'
+import { Eye, Wifi, Zap } from 'lucide-react'
 
 export default function DiagnosticsSection() {
   return (
@@ -42,26 +42,6 @@ export default function DiagnosticsSection() {
             <li className="flex gap-2">
               <Activity className="mt-0.5 h-4 w-4 text-emerald-600" />
               <span><span className="font-medium text-slate-800">El Tiempo de Respuesta:</span> puedes ver exactamente cuántos milisegundos tarda el servidor en pensar antes de responder.</span>
-            </li>
-          </ul>
-        </article>
-      </Reveal>
-
-      <Reveal delay={0.035}>
-        <article className="card mt-5 p-6">
-          <h3 className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-lg font-semibold text-transparent">Guía de navegación (Cómo moverse por el panel)</h3>
-          <ul className="mt-3 space-y-2 text-sm text-slate-600">
-            <li className="flex gap-2">
-              <Monitor className="mt-0.5 h-4 w-4 text-rose-600" />
-              <span><span className="font-medium text-slate-800">Círculo Rojo (Record):</span> si está encendido, está grabando todo lo que pasa. Si lo apagas, deja de registrar.</span>
-            </li>
-            <li className="flex gap-2">
-              <Monitor className="mt-0.5 h-4 w-4 text-slate-500" />
-              <span><span className="font-medium text-slate-800">Prohibido / Clear:</span> limpia la lista para que puedas empezar un diagnóstico desde cero.</span>
-            </li>
-            <li className="flex gap-2">
-              <MousePointer2 className="mt-0.5 h-4 w-4 text-violet-600" />
-              <span><span className="font-medium text-slate-800">Filtro <code>Fetch/XHR</code>:</span> es el más importante. Filtra ruido (imágenes, fuentes, scripts) y deja solo peticiones de datos puras de Capa 7.</span>
             </li>
           </ul>
         </article>

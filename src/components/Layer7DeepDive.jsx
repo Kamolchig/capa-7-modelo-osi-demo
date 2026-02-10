@@ -360,7 +360,12 @@ export default function Layer7DeepDive() {
             icon={<Settings2 className="h-4 w-4" />}
           >
             <p>
-              Aquí está el contexto que define cómo debe comportarse la conversación entre cliente y servidor.
+              Un <span className="font-semibold">header</span> es un metadato en formato clave-valor que acompaña cada request/response HTTP.
+              Sirve para dar contexto: identidad, formato de datos, idioma y reglas de caché.
+            </p>
+            <p className="mt-2">
+              Lo encuentras en <span className="font-semibold">DevTools → Network → selecciona una request → pestaña Headers</span>.
+              Ahí puedes ver exactamente qué envió el cliente y qué respondió el servidor.
             </p>
             <ul className="mt-3 space-y-2">
               <li><span className="font-semibold"><code>User-Agent</code>:</span> le dice al servidor si eres un iPhone o un PC para que te envíe la versión correcta de la web.</li>
@@ -394,13 +399,27 @@ export default function Layer7DeepDive() {
             icon={<ShieldCheck className="h-4 w-4" />}
           >
             <p>
-              El handshake no es magia: es un acuerdo matemático. Cliente y servidor eligen una llave de sesión para que nadie en el camino pueda leer el mensaje.
+              El <span className="font-semibold">handshake TLS</span> es la fase de “presentación y acuerdo” antes de enviar datos sensibles.
+              Su objetivo es comprobar identidad y crear una conexión cifrada segura.
             </p>
-            <ul className="mt-2 space-y-1">
-              <li><span className="font-semibold">Handshake:</span> negociación de parámetros criptográficos antes del HTTP real.</li>
-              <li><span className="font-semibold">El candado:</span> HTTPS es HTTP viajando dentro de un sobre cifrado.</li>
-              <li><span className="font-semibold">Sin TLS:</span> tus contraseñas podrían viajar en texto plano por el Wi-Fi.</li>
+            <ul className="mt-3 space-y-2">
+              <li>
+                <span className="font-semibold">1) Hola inicial:</span> el cliente dice “quiero conexión segura” y propone versiones/cifrados compatibles.
+              </li>
+              <li>
+                <span className="font-semibold">2) Identidad del servidor:</span> el servidor envía su certificado digital para demostrar que realmente es quien dice ser.
+              </li>
+              <li>
+                <span className="font-semibold">3) Acuerdo de claves:</span> ambos calculan una <span className="font-semibold">llave de sesión</span> compartida para cifrar el resto de la conversación.
+              </li>
+              <li>
+                <span className="font-semibold">4) Canal seguro activo:</span> desde ahí, HTTP viaja dentro de TLS (eso es HTTPS) y los datos quedan protegidos.
+              </li>
             </ul>
+            <p className="mt-3 text-sm text-slate-700">
+              <span className="font-semibold">El candado del navegador</span> indica que este proceso se completó correctamente.
+              Sin TLS, contraseñas, tokens y mensajes podrían viajar en texto plano en redes públicas.
+            </p>
             <div className="mt-3 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-emerald-800">
               🔒 Conexión Segura
             </div>
@@ -424,31 +443,6 @@ export default function Layer7DeepDive() {
 
       <Layer7ConceptBlocks />
 
-      <Reveal delay={0.1}>
-        <motion.div
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={{ hidden: {}, show: { transition: { staggerChildren: 0.08 } } }}
-          className="mt-8 grid gap-3 md:grid-cols-3"
-        >
-          <motion.article variants={{ hidden: { opacity: 0, y: 16, filter: 'blur(6px)' }, show: { opacity: 1, y: 0, filter: 'blur(0px)' } }} className="card p-4">
-            <p className="text-xs uppercase tracking-wide text-slate-500">UI Action</p>
-            <p className="mt-1 text-sm text-slate-800">Tap en “refresh feed”</p>
-          </motion.article>
-          <motion.article variants={{ hidden: { opacity: 0, y: 16, filter: 'blur(6px)' }, show: { opacity: 1, y: 0, filter: 'blur(0px)' } }} className="card p-4">
-            <p className="text-xs uppercase tracking-wide text-slate-500">HTTP Request</p>
-            <p className="mt-1 font-mono text-sm text-slate-800">GET /v1/feed?limit=10</p>
-          </motion.article>
-          <motion.article variants={{ hidden: { opacity: 0, y: 16, filter: 'blur(6px)' }, show: { opacity: 1, y: 0, filter: 'blur(0px)' } }} className="card p-4">
-            <p className="text-xs uppercase tracking-wide text-slate-500">HTTP Response</p>
-            <p className="mt-1 text-sm text-slate-800">
-              <span className="rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-700">200 OK</span>{' '}
-              (JSON)
-            </p>
-          </motion.article>
-        </motion.div>
-      </Reveal>
     </section>
   )
 }
