@@ -244,17 +244,21 @@ export default function Layer7DeepDive() {
             step={2}
             icon={<Link2 className="h-6 w-6" />}
             title="Recurso (URL y parámetros)"
-            idea={<>La <span className="font-semibold text-purple-600">URL</span> define exactamente a qué servidor, por qué canal y a qué recurso quieres acceder.</>}
+            idea={
+              <>
+                La <span className="font-semibold text-purple-600">URL</span> es la dirección del recurso que quieres consultar.
+                La <span className="font-semibold text-purple-600">ruta</span> indica “dónde” está dentro de la API y los parámetros ayudan a pedir exactamente lo que necesitas.
+              </>
+            }
             badges={[
-              { label: 'https://ejemplo.com:443/api/v1/users?id=10', className: 'rounded-full border border-slate-200 bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-700' }
+              { label: 'https://ejemplo.com/api/v1/users?id=10', className: 'rounded-full border border-slate-200 bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-700' }
             ]}
             bullets={[
-              'Esquema: https (define el nivel de seguridad).',
-              'Host: ejemplo.com (apunta al servidor vía DNS) y puerto :443 (canal por defecto para HTTPS).',
-              'Path: /api/v1/users (jerarquía lógica de los datos) + Query String: ?id=10 (filtrar o buscar).',
-              'Nota técnica: El puerto vive en la Capa 4, pero la Capa 7 lo usa para decidir si la conexión será segura (HTTPS) o no.'
+              'Ruta principal: por ejemplo, /api/v1/users. Te dice qué tipo de recurso estás pidiendo.',
+              'Subrutas: agregan detalle dentro del recurso. Ejemplo: /api/v1/users/42/profile apunta al perfil del usuario 42.',
+              'Una ruta clara evita confusiones entre cliente y servidor: ambos “hablan” sobre el mismo recurso.'
             ]}
-            example={`https://ejemplo.com:443/api/v1/users?id=10\nhttps://api.redes.edu:443/v1/feed?limit=10&cursor=abc`}
+            example={`https://ejemplo.com/api/v1/users/42/profile\nhttps://api.redes.edu/v1/feed?limit=10&cursor=abc`}
             devtools={[
               { label: 'Method', description: '¿Qué acción pedí?' },
               { label: 'URL', description: '¿A qué recurso se lo pedí?' },
@@ -302,8 +306,13 @@ export default function Layer7DeepDive() {
           <CardBlock
             step={3}
             icon={<MessageSquareText className="h-6 w-6" />}
-            title="Significado (status + headers + payload)"
-            idea={<>El código de estado no es decoración: expresa la semántica de la respuesta del servidor en un rango bien definido.</>}
+            title="Significado (status HTTP)"
+            idea={
+              <>
+                El <span className="font-semibold text-purple-600">status code</span> resume el resultado de tu solicitud.
+                En segundos te dice si todo salió bien, si hubo redirección o si ocurrió un error.
+              </>
+            }
             badges={[
               { label: '1xx', className: 'rounded-full border border-purple-200 bg-purple-50 px-2 py-0.5 text-xs font-semibold text-purple-600' },
               { label: '2xx', className: 'rounded-full border border-purple-200 bg-purple-50 px-2 py-0.5 text-xs font-semibold text-purple-600' },
@@ -312,31 +321,28 @@ export default function Layer7DeepDive() {
               { label: '5xx', className: 'rounded-full border border-purple-200 bg-purple-50 px-2 py-0.5 text-xs font-semibold text-purple-600' }
             ]}
             bullets={[
-              '1xx: informativos (el proceso continúa); 2xx: éxito (todo salió como se esperaba).',
-              '3xx: redirección (el recurso se movió o se sirve desde caché).',
-              '4xx: error del cliente (formato, autenticación o permisos); 5xx: error del servidor (falló backend).'
+              '2xx = éxito. Ejemplo: 200 OK cuando el servidor entrega los datos.',
+              '3xx = redirección o caché. Ejemplo: 304 Not Modified (usa copia local, no es error).',
+              '4xx = error del cliente. Ejemplos: 401 (falta login), 403 (sin permiso), 404 (ruta no existe).',
+              '5xx = error del servidor. Ejemplo: 500 Internal Server Error.'
             ]}
-            example={`HTTP/1.1 200 OK\nHTTP/1.1 302 Found\nHTTP/1.1 404 Not Found\nHTTP/1.1 500 Internal Server Error`}
+            example={`HTTP/1.1 200 OK\nHTTP/1.1 304 Not Modified\nHTTP/1.1 404 Not Found\nHTTP/1.1 500 Internal Server Error`}
             devtools={[
               { label: 'Status', description: '¿Me hicieron caso?' },
-              { label: 'Headers', description: 'La letra chiquita del mensaje.' },
-              { label: 'Payload', description: '¿Qué datos envié o recibí?' }
+              { label: 'URL', description: '¿Qué recurso respondió o falló?' },
+              { label: 'Response', description: '¿Qué mensaje devolvió el servidor?' }
             ]}
             extra={
               <>
                 <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Cheat-sheet de status</p>
                 <ul className="mt-2 space-y-1 text-sm text-slate-700">
-                  <li><span className="font-medium">2xx:</span> la solicitud fue aceptada correctamente (ejemplo: <span className="rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-700">200</span> / 204).</li>
-                  <li><span className="font-medium">3xx:</span> redirección o caché; <span className="font-medium">304</span> significa “sin cambios”, no error.</li>
-                  <li><span className="font-medium">4xx:</span> el problema está en la solicitud del cliente o sus permisos.</li>
-                  <li><span className="font-medium">401:</span> falta autenticación válida (token ausente, vencido o incorrecto).</li>
-                  <li><span className="font-medium">403:</span> el usuario está autenticado, pero no tiene autorización.</li>
-                  <li><span className="font-medium">5xx:</span> el servidor falló al procesar una solicitud válida.</li>
-                  <li><span className="font-medium">418 - I&apos;m a teapot:</span> un código real creado como broma que demuestra que HTTP es un lenguaje vivo.</li>
+                  <li><span className="font-medium">2xx:</span> éxito (ejemplo: 200 / 204).</li>
+                  <li><span className="font-medium">3xx:</span> redirección o caché; 304 significa “sin cambios”, no error.</li>
+                  <li><span className="font-medium">4xx:</span> error del cliente (401 autenticación, 403 permisos, 404 recurso).</li>
+                  <li><span className="font-medium">5xx:</span> error del servidor (ejemplo: 500).</li>
                 </ul>
                 <p className="mt-2 text-xs text-slate-600">
-                  Nota: el caché condicional puede confundir el diagnóstico porque un 304 evita descargar el contenido otra vez;
-                  parece que “no pasó nada”, pero en realidad el navegador reutilizó datos válidos almacenados.
+                  Nota: un 304 puede parecer “sin respuesta”, pero el navegador reutiliza una copia válida guardada.
                 </p>
               </>
             }
@@ -358,7 +364,7 @@ export default function Layer7DeepDive() {
             </p>
             <ul className="mt-3 space-y-2">
               <li><span className="font-semibold"><code>User-Agent</code>:</span> le dice al servidor si eres un iPhone o un PC para que te envíe la versión correcta de la web.</li>
-              <li><span className="font-semibold"><code>Authorization: Bearer ...</code>:</span> es como mostrar un carnet VIP en la puerta de una discoteca.</li>
+              <li><span className="font-semibold"><code>Authorization: Bearer ...</code>:</span> es como mostrar tu credencial al entrar a la biblioteca del campus.</li>
               <li><span className="font-semibold"><code>Content-Type</code> vs <code>Accept</code>:</span> uno dice qué envío y el otro dice qué espero recibir. Si no coinciden, la comunicación falla.</li>
             </ul>
           </DeepDisclosure>
